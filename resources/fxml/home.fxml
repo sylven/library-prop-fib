@@ -1,0 +1,422 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="680.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.upc.fib.library.controllers.Home">
+   <children>
+      <VBox layoutX="117.0" layoutY="62.0" prefHeight="680.0" prefWidth="1200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <AnchorPane prefHeight="640.0" prefWidth="1200.0">
+               <children>
+                  <TabPane layoutX="312.0" layoutY="138.0" prefHeight="640.0" prefWidth="1200.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <tabs>
+                      <Tab text="Documentos">
+                        <content>
+                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                 <children>
+                                    <TabPane fx:id="documentsTab" layoutX="113.0" layoutY="47.0" prefHeight="611.0" prefWidth="1200.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                      <tabs>
+                                        <Tab text="Búsqueda">
+                                          <content>
+                                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                                   <children>
+                                                      <Pane layoutX="121.0" layoutY="69.0" prefHeight="582.0" prefWidth="1200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                         <children>
+                                                            <AnchorPane prefHeight="582.0" prefWidth="600.0">
+                                                               <children>
+                                                                  <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" text="?" />
+                                                                  <Label layoutX="257.0" layoutY="14.0" text="Búsqueda">
+                                                                     <font>
+                                                                        <Font size="20.0" />
+                                                                     </font>
+                                                                  </Label>
+                                                                  <Label layoutX="14.0" layoutY="48.0" text="Introduce el autor y/o el título para realizar una búsqueda de documentos." />
+                                                                  <Label layoutX="14.0" layoutY="71.0" text="Autor" />
+                                                                  <ComboBox fx:id="dT1Author" editable="true" layoutX="14.0" layoutY="88.0" prefHeight="25.0" prefWidth="572.0" />
+                                                                  <Button fx:id="dT1AuthorClear" layoutX="539.0" layoutY="88.0" mnemonicParsing="false" onAction="#dT1AuthorClear" text="X" />
+                                                                  <Label layoutX="14.0" layoutY="121.0" text="Título" />
+                                                                  <ComboBox fx:id="dT1Title" editable="true" layoutX="14.0" layoutY="138.0" prefHeight="25.0" prefWidth="572.0" />
+                                                                  <Button fx:id="dT1TitleClear" layoutX="539.0" layoutY="138.0" mnemonicParsing="false" onAction="#dT1TitleClear" text="X" />
+                                                                  <Button fx:id="dT1Search" layoutX="14.0" layoutY="171.0" mnemonicParsing="false" onAction="#dT1Search" text="Buscar" />
+                                                                  <Label layoutX="186.0" layoutY="196.0" text="Documentos encontrados">
+                                                                     <font>
+                                                                        <Font size="20.0" />
+                                                                     </font>
+                                                                  </Label>
+                                                                  <AnchorPane layoutX="14.0" layoutY="226.0" prefHeight="314.0" prefWidth="572.0">
+                                                                     <children>
+                                                                        <TableView fx:id="dT1TableView" layoutX="214.0" layoutY="61.0" prefHeight="314.0" prefWidth="572.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                                          <columns>
+                                                                            <TableColumn fx:id="dT1TableViewTitle" prefWidth="394.0" text="Título" />
+                                                                            <TableColumn fx:id="dT1TableViewAuthor" prefWidth="176.0" text="Autor" />
+                                                                          </columns>
+                                                                        </TableView>
+                                                                     </children>
+                                                                  </AnchorPane>
+                                                                  <Button fx:id="dT1Remove" layoutX="14.0" layoutY="548.0" mnemonicParsing="false" onAction="#dT1Remove" text="Eliminar documento" />
+                                                                  <Button fx:id="dT1Show" layoutX="487.0" layoutY="548.0" mnemonicParsing="false" onAction="#dT1Show" text="Ver documento" />
+                                                               </children>
+                                                            </AnchorPane>
+                                                            <AnchorPane layoutX="600.0" prefHeight="582.0" prefWidth="600.0" style="-fx-background-color: #e0e0e0;">
+                                                              <children>
+                                                                  <Button fx:id="dT1DocClear" layoutX="562.0" layoutY="14.0" mnemonicParsing="false" onAction="#dT1DocClear" text="X" />
+                                                                  <Label layoutX="205.0" layoutY="14.0" text="Visualizar documento">
+                                                                     <font>
+                                                                        <Font size="20.0" />
+                                                                     </font>
+                                                                  </Label>
+                                                                  <Label layoutX="14.0" layoutY="46.0" text="Autor" />
+                                                                  <TextField fx:id="dT1DocAuthor" layoutX="14.0" layoutY="63.0" prefHeight="25.0" prefWidth="572.0" />
+                                                                  <Label layoutX="14.0" layoutY="96.0" text="Título" />
+                                                                  <TextField fx:id="dT1DocTitle" layoutX="14.0" layoutY="113.0" prefHeight="25.0" prefWidth="572.0" />
+                                                                  <Label layoutX="16.0" layoutY="144.0" text="Contenido" />
+                                                                  <AnchorPane layoutX="14.0" layoutY="163.0" prefHeight="377.0" prefWidth="572.0">
+                                                                     <children>
+                                                                        <TextArea fx:id="dT1DocContent" layoutX="112.0" layoutY="27.0" prefHeight="377.0" prefWidth="572.0" wrapText="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                                                     </children>
+                                                                  </AnchorPane>
+                                                                  <Button fx:id="dT1Save" layoutX="14.0" layoutY="548.0" mnemonicParsing="false" onAction="#dT1Save" text="Guardar" />
+                                                                  <Button fx:id="dT1Similars" layoutX="411.0" layoutY="548.0" mnemonicParsing="false" onAction="#dT1Similars" text="Buscar documentos parecidos" />
+                                                               </children>
+                                                            </AnchorPane>
+                                                         </children>
+                                                      </Pane>
+                                                   </children>
+                                                </AnchorPane>
+                                          </content>
+                                        </Tab>
+                                        <Tab text="Búsqueda por expresion">
+                                          <content>
+                                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                              <children>
+                                                <Pane layoutX="121.0" layoutY="69.0" prefHeight="582.0" prefWidth="1200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                   <children>
+                                                      <AnchorPane prefHeight="582.0" prefWidth="600.0">
+                                                         <children>
+                                                                  <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" text="?" />
+                                                            <Label layoutX="150.0" layoutY="14.0" text="Búsqueda por expresión booleana">
+                                                               <font>
+                                                                  <Font size="20.0" />
+                                                               </font>
+                                                            </Label>
+                                                            <Label layoutX="14.0" layoutY="48.0" text="Introduce una expresion booleana" />
+                                                                  <Label layoutX="14.0" layoutY="94.0" style="-fx-font-style: italic;" text="Carácteres admitidos: | ! ( ) &quot; &quot; { } &amp;" />
+                                                                  <Label layoutX="14.0" layoutY="117.0" style="-fx-font-style: italic;" text="Ejemplo: automóvil &amp; !Android &amp; {transporte personas ruedas} &amp; (&quot;nueve plazas&quot; | &quot;cinco plazas&quot;)" />
+                                                            <TextField fx:id="dT2Expression" layoutX="14.0" layoutY="66.0" prefHeight="25.0" prefWidth="572.0" />
+                                                            <Button fx:id="dT2ExpressionClear" layoutX="562.0" layoutY="66.0" mnemonicParsing="false" onAction="#dT2ExpressionClear" text="X" />
+                                                            <Button fx:id="dT2Search" layoutX="14.0" layoutY="140.0" mnemonicParsing="false" onAction="#dT2Search" text="Buscar" />
+                                                            <Label layoutX="186.0" layoutY="196.0" text="Documentos encontrados">
+                                                               <font>
+                                                                  <Font size="20.0" />
+                                                               </font>
+                                                            </Label>
+                                                            <AnchorPane layoutX="14.0" layoutY="226.0" prefHeight="314.0" prefWidth="572.0">
+                                                               <children>
+                                                                  <TableView fx:id="dT2TableView" layoutX="214.0" layoutY="61.0" prefHeight="314.0" prefWidth="572.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                                    <columns>
+                                                                      <TableColumn fx:id="dT2TableViewTitle" prefWidth="394.0" text="Título" />
+                                                                      <TableColumn fx:id="dT2TableViewAuthor" minWidth="0.0" prefWidth="176.0" text="Autor" />
+                                                                    </columns>
+                                                                  </TableView>
+                                                               </children>
+                                                            </AnchorPane>
+                                                            <Button fx:id="dT2Remove" layoutX="14.0" layoutY="548.0" mnemonicParsing="false" onAction="#dT2Remove" text="Eliminar documento" />
+                                                            <Button fx:id="dT2Show" layoutX="487.0" layoutY="548.0" mnemonicParsing="false" onAction="#dT2Show" text="Ver documento" />
+                                                         </children>
+                                                      </AnchorPane>
+                                                      <AnchorPane layoutX="600.0" prefHeight="582.0" prefWidth="600.0" style="-fx-background-color: #e0e0e0;">
+                                                        <children>
+                                                            <Button fx:id="dT2DocClear" layoutX="562.0" layoutY="14.0" mnemonicParsing="false" onAction="#dT2DocClear" text="X" />
+                                                            <Label layoutX="205.0" layoutY="14.0" text="Visualizar documento">
+                                                               <font>
+                                                                  <Font size="20.0" />
+                                                               </font>
+                                                            </Label>
+                                                            <Label layoutX="14.0" layoutY="46.0" text="Autor" />
+                                                            <TextField fx:id="dT2DocAuthor" layoutX="14.0" layoutY="63.0" prefHeight="25.0" prefWidth="572.0" />
+                                                            <Label layoutX="14.0" layoutY="96.0" text="Título" />
+                                                            <TextField fx:id="dT2DocTitle" layoutX="14.0" layoutY="113.0" prefHeight="25.0" prefWidth="572.0" />
+                                                            <Label layoutX="16.0" layoutY="144.0" text="Contenido" />
+                                                            <AnchorPane layoutX="14.0" layoutY="163.0" prefHeight="377.0" prefWidth="572.0">
+                                                               <children>
+                                                                  <TextArea fx:id="dT2DocContent" layoutX="112.0" layoutY="27.0" prefHeight="377.0" prefWidth="572.0" wrapText="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                                               </children>
+                                                            </AnchorPane>
+                                                            <Button fx:id="dT2Save" layoutX="14.0" layoutY="548.0" mnemonicParsing="false" onAction="#dT2Save" text="Guardar" />
+                                                            <Button fx:id="dT2Similars" layoutX="411.0" layoutY="548.0" mnemonicParsing="false" onAction="#dT2Similars" text="Buscar documentos parecidos" />
+                                                         </children>
+                                                      </AnchorPane>
+                                                   </children>
+                                                </Pane>
+                                              </children>
+                                              </AnchorPane>
+                                          </content>
+                                        </Tab>
+                                        <Tab text="Añadir documentos">
+                                          <content>
+                                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                              <children>
+                                                <Pane layoutX="121.0" layoutY="69.0" prefHeight="582.0" prefWidth="1200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                   <children>
+                                                      <AnchorPane prefHeight="582.0" prefWidth="600.0">
+                                                         <children>
+                                                                  <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" text="?" />
+                                                            <Label layoutX="213.0" layoutY="14.0" text="Añadir documentos">
+                                                               <font>
+                                                                  <Font size="20.0" />
+                                                               </font>
+                                                            </Label>
+                                                            <Button fx:id="dT3AddFile" layoutX="197.0" layoutY="58.0" mnemonicParsing="false" onAction="#dT3AddFile" text="Añadir documento desde un fichero" />
+                                                                  <Button fx:id="dT3AddFolder" layoutX="190.0" layoutY="96.0" mnemonicParsing="false" onAction="#dT3AddFolder" text="Añadir documentos desde una carpeta" />
+                                                            <Label layoutX="143.0" layoutY="145.0" text="Arrastra documentos para añadirlos">
+                                                               <font>
+                                                                  <Font size="20.0" />
+                                                               </font>
+                                                            </Label>
+                                                            <AnchorPane layoutX="14.0" layoutY="180.0" prefHeight="386.0" prefWidth="572.0">
+                                                                     <children>
+                                                                        <Pane fx:id="dT3Drag" layoutX="249.0" layoutY="45.0" onDragOver="#dT3DragOver" onDragDropped="#dT3DragDropped" onDragExited="#dT3DragExited" prefHeight="314.0" prefWidth="572.0" style="-fx-background-color: #e0e0e0;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                                           <children>
+                                                                              <Label layoutX="217.0" layoutY="185.0" text="Arrastra documentos aquí" />
+                                                                           </children>
+                                                                        </Pane>
+                                                                     </children>
+                                                            </AnchorPane>
+                                                         </children>
+                                                      </AnchorPane>
+                                                      <AnchorPane layoutX="600.0" prefHeight="582.0" prefWidth="600.0" style="-fx-background-color: #e0e0e0;">
+                                                        <children>
+                                                            <Label layoutX="218.0" layoutY="12.0" text="Añadir documento">
+                                                               <font>
+                                                                  <Font size="20.0" />
+                                                               </font>
+                                                            </Label>
+                                                            <Label layoutX="14.0" layoutY="46.0" text="Autor" />
+                                                            <TextField fx:id="dT3DocAuthor" layoutX="14.0" layoutY="63.0" prefHeight="25.0" prefWidth="572.0" />
+                                                            <Label layoutX="14.0" layoutY="96.0" text="Título" />
+                                                            <TextField fx:id="dT3DocTitle" layoutX="14.0" layoutY="113.0" prefHeight="25.0" prefWidth="572.0" />
+                                                            <Label layoutX="16.0" layoutY="144.0" text="Contenido" />
+                                                            <AnchorPane layoutX="14.0" layoutY="163.0" prefHeight="377.0" prefWidth="572.0">
+                                                               <children>
+                                                                  <TextArea fx:id="dT3DocContent" layoutX="112.0" layoutY="27.0" prefHeight="377.0" prefWidth="572.0" wrapText="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                                               </children>
+                                                            </AnchorPane>
+                                                            <Button fx:id="dT3Add" layoutX="14.0" layoutY="548.0" mnemonicParsing="false" onAction="#dT3Add" text="Añadir documento" />
+                                                         </children>
+                                                      </AnchorPane>
+                                                   </children>
+                                                </Pane>
+                                              </children>
+                                              </AnchorPane>
+                                          </content>
+                                        </Tab>
+                                        <Tab text="Documentos parecidos">
+                                          <content>
+                                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                                   <children>
+                                                      <Pane layoutX="121.0" layoutY="69.0" prefHeight="582.0" prefWidth="1200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                         <children>
+                                                            <AnchorPane prefHeight="582.0" prefWidth="600.0">
+                                                               <children>
+                                                                  <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" text="?" />
+                                                                  <Label layoutX="198.0" layoutY="14.0" text="Documentos parecidos">
+                                                                     <font>
+                                                                        <Font size="20.0" />
+                                                                     </font>
+                                                                  </Label>
+                                                                  <Label layoutX="14.0" layoutY="48.0" text="Selecciona un documento para buscar otros documentos parecidos" />
+                                                                  <Label layoutX="14.0" layoutY="71.0" text="Autor" />
+                                                                  <ComboBox fx:id="dT4Author" layoutX="14.0" layoutY="88.0" prefHeight="25.0" prefWidth="572.0" />
+                                                                  <Label layoutX="14.0" layoutY="121.0" text="Título" />
+                                                                  <ComboBox fx:id="dT4Title" layoutX="14.0" layoutY="138.0" prefHeight="25.0" prefWidth="572.0" />
+                                                                  <Label layoutX="244.0" layoutY="184.0" text="Usar algoritmo" />
+                                                                  <ComboBox fx:id="dT4Algorithm" layoutX="331.0" layoutY="180.0" prefHeight="25.0" prefWidth="53.0" />
+                                                                  <Label layoutX="428.0" layoutY="184.0" text="Mostrar" />
+                                                                  <TextField fx:id="dT4NResults" layoutX="477.0" layoutY="180.0" prefHeight="25.0" prefWidth="47.0" text="5" />
+                                                                  <Label layoutX="530.0" layoutY="184.0" text="resultados" />
+                                                                  <Button fx:id="dT4Search" onAction="#dT4Search" layoutX="14.0" layoutY="180.0" mnemonicParsing="false" text="Buscar" />
+                                                                  <Label layoutX="186.0" layoutY="220.0" text="Documentos encontrados">
+                                                                     <font>
+                                                                        <Font size="20.0" />
+                                                                     </font>
+                                                                  </Label>
+                                                                  <AnchorPane layoutX="14.0" layoutY="249.0" prefHeight="291.0" prefWidth="572.0">
+                                                                     <children>
+                                                                        <TableView fx:id="dT4TableView" layoutX="214.0" layoutY="61.0" prefHeight="314.0" prefWidth="572.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                                          <columns>
+                                                                            <TableColumn fx:id="dT4TableViewTitle" prefWidth="394.0" text="Título" />
+                                                                            <TableColumn fx:id="dT4TableViewAuthor" minWidth="0.0" prefWidth="176.0" text="Autor" />
+                                                                          </columns>
+                                                                        </TableView>
+                                                                     </children>
+                                                                  </AnchorPane>
+                                                                  <Button fx:id="dT4Remove" onAction="#dT4Remove" layoutX="14.0" layoutY="548.0" mnemonicParsing="false" text="Eliminar documento" />
+                                                                  <Button fx:id="dT4Show" onAction="#dT4Show" layoutX="487.0" layoutY="548.0" mnemonicParsing="false" text="Ver documento" />
+                                                               </children>
+                                                            </AnchorPane>
+                                                            <AnchorPane layoutX="600.0" prefHeight="582.0" prefWidth="600.0" style="-fx-background-color: #e0e0e0;">
+                                                              <children>
+                                                                  <Button fx:id="dT4DocClear" onAction="#dT4DocClear" layoutX="562.0" layoutY="14.0" mnemonicParsing="false" text="X" />
+                                                                  <Label layoutX="205.0" layoutY="14.0" text="Visualizar documento">
+                                                                     <font>
+                                                                        <Font size="20.0" />
+                                                                     </font>
+                                                                  </Label>
+                                                                  <Label layoutX="14.0" layoutY="46.0" text="Autor" />
+                                                                  <TextField fx:id="dT4DocAuthor" layoutX="14.0" layoutY="63.0" prefHeight="25.0" prefWidth="572.0" />
+                                                                  <Label layoutX="14.0" layoutY="96.0" text="Título" />
+                                                                  <TextField fx:id="dT4DocTitle" layoutX="14.0" layoutY="113.0" prefHeight="25.0" prefWidth="572.0" />
+                                                                  <Label layoutX="16.0" layoutY="144.0" text="Contenido" />
+                                                                  <AnchorPane layoutX="14.0" layoutY="163.0" prefHeight="377.0" prefWidth="572.0">
+                                                                     <children>
+                                                                        <TextArea fx:id="dT4DocContent" layoutX="112.0" layoutY="27.0" prefHeight="377.0" prefWidth="572.0" wrapText="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                                                     </children>
+                                                                  </AnchorPane>
+                                                                  <Button fx:id="dT4Save" layoutX="14.0" layoutY="548.0" mnemonicParsing="false" onAction="#dT4Save" text="Guardar" />
+                                                                  <Button fx:id="dT4Similars" layoutX="411.0" layoutY="548.0" mnemonicParsing="false" onAction="#dT4Similars" text="Buscar documentos parecidos" />
+                                                               </children>
+                                                            </AnchorPane>
+                                                         </children>
+                                                      </Pane>
+                                                   </children>
+                                                </AnchorPane>
+                                          </content>
+                                        </Tab>
+                                      </tabs>
+                                    </TabPane>
+                                 </children>
+                              </AnchorPane>
+                        </content>
+                      </Tab>
+                      <Tab text="Autores">
+                        <content>
+                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                 <children>
+                                    <TabPane fx:id="authorsTab" layoutX="113.0" layoutY="47.0" prefHeight="611.0" prefWidth="1200.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                      <tabs>
+                                        <Tab text="Búsqueda">
+                                          <content>
+                                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                                   <children>
+                                                      <Pane layoutX="121.0" layoutY="69.0" prefHeight="582.0" prefWidth="1200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                         <children>
+                                                            <AnchorPane prefHeight="582.0" prefWidth="600.0">
+                                                               <children>
+                                                                  <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" text="?" />
+                                                                  <Label layoutX="257.0" layoutY="14.0" text="Búsqueda">
+                                                                     <font>
+                                                                        <Font size="20.0" />
+                                                                     </font>
+                                                                  </Label>
+                                                                  <Label layoutX="14.0" layoutY="48.0" text="Introduce el prefijo o nombre de un autor para buscarlo." />
+                                                                  <Label layoutX="14.0" layoutY="71.0" text="Autor" />
+                                                                  <ComboBox fx:id="aT1Author" editable="true" layoutX="14.0" layoutY="88.0" prefHeight="25.0" prefWidth="572.0" />
+                                                                  <Button fx:id="aT1ClearAuthor" layoutX="539.0" layoutY="88.0" mnemonicParsing="false" onAction="#aT1ClearAuthor" text="X" />
+                                                                  <Button fx:id="aT1Search" layoutX="14.0" layoutY="121.0" mnemonicParsing="false" onAction="#aT1Search" text="Buscar" />
+                                                                  <Label layoutX="208.0" layoutY="146.0" text="Autores encontrados">
+                                                                     <font>
+                                                                        <Font size="20.0" />
+                                                                     </font>
+                                                                  </Label>
+                                                                  <AnchorPane layoutX="14.0" layoutY="176.0" prefHeight="364.0" prefWidth="572.0">
+                                                                     <children>
+                                                                        <TableView fx:id="aT1TableView" layoutX="214.0" layoutY="61.0" prefHeight="314.0" prefWidth="572.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                                          <columns>
+                                                                            <TableColumn fx:id="aT1TableViewAuthor" minWidth="0.0" prefWidth="570.0" text="Autor" />
+                                                                          </columns>
+                                                                        </TableView>
+                                                                     </children>
+                                                                  </AnchorPane>
+                                                                  <Button fx:id="aT1Remove" layoutX="14.0" layoutY="548.0" mnemonicParsing="false" onAction="#aT1Remove" text="Eliminar autor" />
+                                                                  <Button fx:id="aT1Show" layoutX="520.0" layoutY="548.0" mnemonicParsing="false" onAction="#aT1Show" text="Ver autor" />
+                                                               </children>
+                                                            </AnchorPane>
+                                                            <AnchorPane layoutX="600.0" prefHeight="582.0" prefWidth="600.0" style="-fx-background-color: #e0e0e0;">
+                                                              <children>
+                                                                  <Button fx:id="aT1AuthorClear" layoutX="562.0" layoutY="14.0" mnemonicParsing="false" onAction="#aT1AuthorClear" text="X" />
+                                                                  <Label layoutX="232.0" layoutY="12.0" text="Visualizar autor">
+                                                                     <font>
+                                                                        <Font size="20.0" />
+                                                                     </font>
+                                                                  </Label>
+                                                                  <Label layoutX="14.0" layoutY="46.0" text="Autor" />
+                                                                  <TextField fx:id="aT1AuthorName" layoutX="14.0" layoutY="63.0" prefHeight="25.0" prefWidth="572.0" />
+                                                                  <AnchorPane layoutX="14.0" layoutY="163.0" prefHeight="377.0" prefWidth="572.0" />
+                                                                  <Button fx:id="aT1Save" layoutX="14.0" layoutY="548.0" mnemonicParsing="false" onAction="#aT1Save" text="Guardar" />
+                                                               </children>
+                                                            </AnchorPane>
+                                                         </children>
+                                                      </Pane>
+                                                   </children>
+                                                </AnchorPane>
+                                          </content>
+                                        </Tab>
+                                        <Tab text="Añadir autor">
+                                          <content>
+                                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                              <children>
+                                                <Pane layoutX="121.0" layoutY="69.0" prefHeight="582.0" prefWidth="1200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                   <children>
+                                                      <AnchorPane prefHeight="582.0" prefWidth="600.0">
+                                                         <children>
+                                                                  <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" text="?" />
+                                                            <Label layoutX="235.0" layoutY="12.0" text="Añadir autores">
+                                                               <font>
+                                                                  <Font size="20.0" />
+                                                               </font>
+                                                            </Label>
+                                                            <AnchorPane layoutX="14.0" layoutY="180.0" prefHeight="386.0" prefWidth="572.0" />
+                                                         </children>
+                                                      </AnchorPane>
+                                                      <AnchorPane layoutX="600.0" prefHeight="582.0" prefWidth="600.0" style="-fx-background-color: #e0e0e0;">
+                                                        <children>
+                                                            <Label layoutX="245.0" layoutY="14.0" text="Añadir autor">
+                                                               <font>
+                                                                  <Font size="20.0" />
+                                                               </font>
+                                                            </Label>
+                                                            <Label layoutX="14.0" layoutY="46.0" text="Autor" />
+                                                            <TextField fx:id="aT2AuthorName" layoutX="14.0" layoutY="63.0" prefHeight="25.0" prefWidth="572.0" />
+                                                            <AnchorPane layoutX="14.0" layoutY="163.0" prefHeight="377.0" prefWidth="572.0" />
+                                                            <Button fx:id="aT2Add" layoutX="14.0" layoutY="548.0" mnemonicParsing="false" onAction="#aT2Add" text="Añadir autor" />
+                                                         </children>
+                                                      </AnchorPane>
+                                                   </children>
+                                                </Pane>
+                                              </children>
+                                              </AnchorPane>
+                                          </content>
+                                        </Tab>
+                                      </tabs>
+                                    </TabPane>
+                                 </children>
+                              </AnchorPane>
+                        </content>
+                      </Tab>
+                        <Tab text="Ajustes">
+                          <content>
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                          </content>
+                        </Tab>
+                        <Tab text="Ayuda">
+                          <content>
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                          </content>
+                        </Tab>
+                        <Tab text="Acerca de">
+                          <content>
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                          </content>
+                        </Tab>
+                    </tabs>
+                  </TabPane>
+               </children>
+            </AnchorPane>
+            <AnchorPane prefHeight="40.0" prefWidth="1200.0" style="-fx-background-color: #c4c4c4;" />
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>
