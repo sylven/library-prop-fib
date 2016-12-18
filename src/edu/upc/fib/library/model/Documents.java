@@ -32,14 +32,17 @@ public class Documents implements Serializable {
 
         // Cargar palabras funcionales
         connectorWords = new Vector<>();
-        try (BufferedReader br = new BufferedReader(new InputStreamReader(this.getClass().getResourceAsStream("/files/connector-words.sp")))) {
-            String line = br.readLine();
-            while (line != null) {
-                connectorWords.add(new String(line).toLowerCase());
-                line = br.readLine();
+        InputStream iS = this.getClass().getResourceAsStream("/files/connector-words.sp");
+        if (iS != null) {
+            try (BufferedReader br = new BufferedReader(new InputStreamReader(iS))) {
+                String line = br.readLine();
+                while (line != null) {
+                    connectorWords.add(new String(line).toLowerCase());
+                    line = br.readLine();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-        } catch (IOException e) {
-            e.printStackTrace();
         }
     }
 

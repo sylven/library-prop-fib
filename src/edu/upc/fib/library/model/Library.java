@@ -16,9 +16,9 @@ public class Library implements Serializable {
     public Library() {
         mDocuments = new Documents();
         mAuthors = new Authors();
-        //loadStatus();
+        loadStatus();
 
-        String content;
+        /*String content;
         content = "Donald John Trump (Nueva York, 14 de junio de 1946) es un empresario, político, personalidad televisiva y escritor estadounidense.\n\nSiendo el presidente electo de los Estados Unidos de América; se convertirá en el 45° presidente de la Unión tras su toma de posesión, programada para el 20 de enero de 2017. Es presidente de la Trump Organization y fundador de la empresa de hotel y juegos de azar Trump Entertainment Resorts, que es ahora propiedad de Carl Icahn. Trump es una celebridad televisiva, y entre otras cosas fue el presentador del reality show The Apprentice, de la NBC, entre 2004 y 2015. Es hijo de un empresario inmobiliario de Nueva York,4 en cuya compañía, Elizabeth Trump & Son, trabajó mientras estudiaba en la Escuela de Negocios Wharton de la Universidad de Pensilvania. En 1968, se unió oficialmente a esa sociedad,5 que controla desde 1971, cuando la renombró Trump Organization. En los años 1990 la empresa entró en bancarrota comercial, pero en la década siguiente se recuperó, lo que le reportó una fortuna de varios miles de millones de dólares. Su campaña para obtener la candidatura republicana a la Casa Blanca para las elecciones de 2016 se vio caracterizada desde su inicio por una gran atención mediática a nivel nacional e internacional debido a la sucesión de declaraciones polémicas por parte de Trump. Sus propuestas más repetidas consisten en la construcción de un muro a lo largo de la frontera con México y una política dura contra la inmigración ilegal, además de una prohibición temporal de la entrada de musulmanes en los Estados Unidos. En lo económico, aboga por modificar la política comercial del país y fortalecer la producción nacional en detrimento de la deslocalización, en consonancia con posiciones proteccionistas.";
         addDocument("Wikipediaa", "Donald Trump", content);
 
@@ -32,12 +32,11 @@ public class Library implements Serializable {
         addDocument("Wikipediaa", "iOs", content);
 
         content = "Un automóvil de turismo, también conocido simplemente como turismo o automóvil o automotor, es el tipo de automóvil destinado al transporte de personas, con al menos cuatro ruedas y un máximo de nueve plazas incluido el conductor.";
-        addDocument("Wikipedia", "Automóvil de turismo", content);
+        addDocument("Wikipedia", "Automóvil de turismo", content);*/
 
         //List<Pair<String, String>> letssee = getBooleanDocuments("automóvil & !Android & {transporte personas ruedas} & (\"nueve plazas\" | \"cinco plazas\")");
 
     }
-
      
 	public void restartStatus(){
         mDocuments = new Documents();
@@ -48,7 +47,7 @@ public class Library implements Serializable {
 
     public void saveStatus() {
         try {
-            FileOutputStream fout = new FileOutputStream("library.dat");
+            FileOutputStream fout = new FileOutputStream("resources/files/library-persistence.dat");
             ObjectOutputStream oos = new ObjectOutputStream(fout);
             oos.writeObject(mDocuments);
             oos.writeObject(mAuthors);
@@ -59,11 +58,15 @@ public class Library implements Serializable {
 
     public void loadStatus() {
         try {
-            FileInputStream fin = new FileInputStream("library.dat");
-            ObjectInputStream ois = new ObjectInputStream(fin);
-            mDocuments = (Documents) ois.readObject();
-            mAuthors = (Authors) ois.readObject();
-            ois.close();
+            File file = new File("resources/files/library-persistence.dat");
+            System.out.println(file.toString());
+            if (file.exists()) {
+                FileInputStream fin = new FileInputStream(file);
+                ObjectInputStream ois = new ObjectInputStream(fin);
+                mDocuments = (Documents) ois.readObject();
+                mAuthors = (Authors) ois.readObject();
+                ois.close();
+            }
         }
         catch (Exception e) { e.printStackTrace(); }
     }
