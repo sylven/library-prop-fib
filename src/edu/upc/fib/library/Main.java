@@ -11,9 +11,7 @@ import javafx.stage.Stage;
 
 public class Main extends Application {
 
-    private Parent root;
-    FXMLLoader fxmlLoader;
-    Home home;
+    private Home home;
 
     @Override
     public void start(Stage primaryStage) throws Exception{
@@ -22,18 +20,20 @@ public class Main extends Application {
 
         FXMLLoader fxmlLoader = new FXMLLoader();
         //Pane p = fxmlLoader.load(getClass().getResource("foo.fxml").openStream());
-        root = fxmlLoader.load(getClass().getResource("/fxml/home.fxml").openStream());
-        home = (Home) fxmlLoader.getController();
+        Parent root = fxmlLoader.load(getClass().getResource("/fxml/home.fxml").openStream());
+        home = fxmlLoader.getController();
 
         primaryStage.getIcons().add(new Image("/imgs/book.png"));
         primaryStage.setTitle("Biblioteca");
         primaryStage.setScene(new Scene(root, 1190, 670));
         primaryStage.setResizable(false);
         primaryStage.show();
+
     }
 
     @Override
     public void stop() {
+
         home.saveStatus();
     }
 

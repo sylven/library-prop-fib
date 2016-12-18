@@ -56,10 +56,9 @@ public class Library implements Serializable {
         catch (Exception e) { e.printStackTrace(); }
     }
 
-    public void loadStatus() {
+    private void loadStatus() {
         try {
             File file = new File("resources/files/library-persistence.dat");
-            System.out.println(file.toString());
             if (file.exists()) {
                 FileInputStream fin = new FileInputStream(file);
                 ObjectInputStream ois = new ObjectInputStream(fin);
