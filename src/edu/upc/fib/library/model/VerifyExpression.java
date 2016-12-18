@@ -66,12 +66,12 @@ public class VerifyExpression {
         //pos_op contiene operando que separa 2 casos recursivos
         else if (expression_cut.elementAt(pos_op).equals("{")){//ha de tener todas las palabras de este conjunto de palabras
             for (int i = 0; i < expression_cut.size(); i++){
-                if (expression_cut.elementAt(i).equals("}")){pos_op = i+1;}
+                if (expression_cut.elementAt(i).equals("}")){pos_op = i+1;i = expression_cut.size()+1;}
             }
         }
         else if (expression_cut.elementAt(pos_op).equals("\"")){//ha de tener este conjunto de palabras tal cual
             for (int i = 1; i < expression_cut.size(); i++){
-                if (expression_cut.elementAt(i).equals("\"")){pos_op = i+1;}
+                if (expression_cut.elementAt(i).equals("\"")){pos_op = i+1;i = expression_cut.size()+1;}
             }
         }
 
