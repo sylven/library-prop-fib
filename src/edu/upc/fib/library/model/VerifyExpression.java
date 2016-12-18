@@ -4,8 +4,8 @@ import java.util.Vector;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class VerifyExpression {
-    public static boolean verifyExpression(String sentenceToTest, String expressionToTest){
+class VerifyExpression {
+    static boolean verifyExpression(String sentenceToTest, String expressionToTest){
         Vector<String> expression_cut = new Sentence(expressionToTest).getVector();
 
         // Expresión regular para partir la frase en palabras, signos y espacios.
@@ -31,7 +31,6 @@ public class VerifyExpression {
 
     private static boolean verifyExpression_rec(Vector<String> expression_cut, Vector<String> expressionToTest) {
         if (expression_cut.size() == 0){return false;}
-        boolean negate_result= false;
         int prof = 0;//----------------------------------------------------------------------------------------cambiar por pilaaaa y subir a no recursiva!! ;)
         for (int i = 0; i < expression_cut.size(); i++) {
             if (prof < 0) {
@@ -168,8 +167,8 @@ public class VerifyExpression {
                 }
             }
         }
-        /*if(expression_cut.size() == 1){*/return expressionToTest.contains(expression_cut.elementAt(0));//}
-        /*else {return false;//}*/
+        return expressionToTest.contains(expression_cut.elementAt(0));
+
     }
     private static boolean test_quotes(Vector<String> expression_cut, Vector<String> expressionToTest) {//work
         boolean contents_all = false;
