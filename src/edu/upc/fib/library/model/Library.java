@@ -47,7 +47,7 @@ public class Library implements Serializable {
 
     public void saveStatus() {
         try {
-            FileOutputStream fout = new FileOutputStream("resources/files/library-persistence.dat");
+            FileOutputStream fout = new FileOutputStream("library-persistence.dat");
             ObjectOutputStream oos = new ObjectOutputStream(fout);
             oos.writeObject(mDocuments);
             oos.writeObject(mAuthors);
@@ -58,7 +58,7 @@ public class Library implements Serializable {
 
     private void loadStatus() {
         try {
-            File file = new File("resources/files/library-persistence.dat");
+            File file = new File("library-persistence.dat");
             if (file.exists()) {
                 FileInputStream fin = new FileInputStream(file);
                 ObjectInputStream ois = new ObjectInputStream(fin);
