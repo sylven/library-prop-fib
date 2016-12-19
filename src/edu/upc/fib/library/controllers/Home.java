@@ -1502,4 +1502,5 @@ public class Home implements Initializable {
         aT1LoadAuthorResults(true);
         updateCombos();
     }
+
 }

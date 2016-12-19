@@ -415,7 +415,7 @@
                           <content>
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                  <children>
-                                    <Button fx:id="ajTReset" layoutX="548.0" layoutY="58.0" mnemonicParsing="false" onAction="#ajTReset" text="Vacíar biblioteca" />
+                                    <Button fx:id="ajTReset" layoutX="548.0" layoutY="88.0" mnemonicParsing="false" onAction="#ajTReset" text="Vacíar biblioteca" />
                                  </children></AnchorPane>
                           </content>
                         </Tab>
