@@ -1,12 +1,12 @@
 EL MUNDO
 Google Maps se adapta a sillas de ruedas gracias al tiempo libre de los ingenieros de Google
-Google naci√≥ como una empresa de buen rollito donde las pol√≠ticas de empresa eran un lujo para sus empleados. Tanto es as√≠ que todo el mundo ten√≠a permiso para invertir un 20% de su jornada laboral en proyectos al margen de su trabajo habitual, algo que dio sus frutos muy pronto.
+Google naciÛ como una empresa de buen rollito donde las polÌticas de empresa eran un lujo para sus empleados. Tanto es asÌ que todo el mundo tenÌa permiso para invertir un 20% de su jornada laboral en proyectos al margen de su trabajo habitual, algo que dio sus frutos muy pronto.
 
-Gmail, AdSense o Google News son algunos de los servicios de la compa√±√≠a que empezaron como 'proyectos del 20%' que luego se sumaron a la empresa como partes important√≠simas de la misma. 
+Gmail, AdSense o Google News son algunos de los servicios de la compaÒÌa que empezaron como 'proyectos del 20%' que luego se sumaron a la empresa como partes importantÌsimas de la misma. 
 
 Y aunque actualmente ya casi nadie parece emplear ese porcentaje libremente y Google ha cambiado mucho su funcionamiento interno, algunos irreverentes han seguido haciendo proyectos propios en su jornada. Es el caso de Rio Akasaka, un responsable de Google Drive, que en su 20% de tiempo ha adaptado los resultados de Google Maps a personas en sillas de ruedas. 
 
-Junto con un equipo de entre 5 y 10 colaboradores, Akasaka ha pasado un a√±o mejorando Maps. En declaraciones a Business Insider, ha asegurado que "la accesibilidad es algo importante en Google, pero que normalmente se trabaja con ello dependiendo de si hay un requisito legal o no". 
+Junto con un equipo de entre 5 y 10 colaboradores, Akasaka ha pasado un aÒo mejorando Maps. En declaraciones a Business Insider, ha asegurado que "la accesibilidad es algo importante en Google, pero que normalmente se trabaja con ello dependiendo de si hay un requisito legal o no". 
 
-El a√±adido que han introducido es bastante sencillo: todos los comerciones y localizaciones de Google Maps tienen unas etiquetas, seleccionadas por usuarios, para describir el lugar. Entre las etiquetas, gracias a Akasaka y su equipo, ahora se puede marcar si un sitio es f√°cilmente accesible con silla de ruedas. Este indicaci√≥n tambi√©n est√° pensada para otras personas con problemas de movilidad.
+El aÒadido que han introducido es bastante sencillo: todos los comerciones y localizaciones de Google Maps tienen unas etiquetas, seleccionadas por usuarios, para describir el lugar. Entre las etiquetas, gracias a Akasaka y su equipo, ahora se puede marcar si un sitio es f·cilmente accesible con silla de ruedas. Este indicaciÛn tambiÈn est· pensada para otras personas con problemas de movilidad.
 
