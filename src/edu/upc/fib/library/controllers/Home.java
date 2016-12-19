@@ -733,49 +733,49 @@ public class Home implements Initializable {
         Stage stage = new Stage();
         File file = fileChooser.showOpenDialog(stage);
 
-        progressBar.setProgress(0);
-        progressBar.setVisible(true);
+        if (file != null) {
+            progressBar.setProgress(0);
+            progressBar.setVisible(true);
 
-        Task<Boolean> task = new Task<Boolean>() {
-            @Override public Boolean call() throws InterruptedException {
-                updateMessage("Cargando documento desde fichero...");
+            Task<Boolean> task = new Task<Boolean>() {
+                @Override public Boolean call() throws InterruptedException {
+                    updateMessage("Cargando documento desde fichero...");
 
-                boolean success = false;
+                    boolean success = false;
 
-                int nFiles = 1;
-                int currentFile = 1;
+                    int nFiles = 1;
+                    int currentFile = 1;
 
-                if (nFiles > 0) {
-                    success = true;
-                    updateProgress(currentFile, nFiles);
-                    dT3AddDocumentFile(file.toString());
+                    if (nFiles > 0) {
+                        success = true;
+                        updateProgress(currentFile, nFiles);
+                        dT3AddDocumentFile(file.toString());
+                    }
+                    return success;
                 }
-                return success;
-            }
-        };
+            };
 
-        task.setOnSucceeded(event -> {
-            progressBar.progressProperty().unbind();
-            progressBar.setVisible(false);
-            status.textProperty().unbind();
+            task.setOnSucceeded(event -> {
+                progressBar.progressProperty().unbind();
+                progressBar.setVisible(false);
+                status.textProperty().unbind();
 
-            Boolean success = task.getValue();
-            if (success) status.setText("Documento añadido satisfactoriamente.");
-            else status.setText("El documento no se ha podido añadir.");
+                Boolean success = task.getValue();
+                if (success) status.setText("Documento añadido satisfactoriamente.");
+                else status.setText("El documento no se ha podido añadir.");
 
-            updateCombos();
-            dT1LoadDocumentResults(true);
-            aT1LoadAuthorResults(true);
-        });
+                updateCombos();
+                dT1LoadDocumentResults(true);
+                aT1LoadAuthorResults(true);
+            });
 
-        status.textProperty().bind(task.messageProperty());
-        progressBar.progressProperty().bind(task.progressProperty());
+            status.textProperty().bind(task.messageProperty());
+            progressBar.progressProperty().bind(task.progressProperty());
 
-        Thread thread = new Thread(task);
-        thread.setDaemon(true);
-        thread.start();
-
-
+            Thread thread = new Thread(task);
+            thread.setDaemon(true);
+            thread.start();
+        }
     }
 
     // DONE  ############
@@ -785,51 +785,54 @@ public class Home implements Initializable {
         Stage stage = new Stage();
         List<File> files = fileChooser.showOpenMultipleDialog(stage);
 
-        progressBar.setProgress(0);
-        progressBar.setVisible(true);
+        if (files != null) {
+            progressBar.setProgress(0);
+            progressBar.setVisible(true);
 
-        Task<Boolean> task = new Task<Boolean>() {
-            @Override public Boolean call() throws InterruptedException {
-                updateMessage("Cargando documentos desde ficheros...");
-                //updateProgress(1, 2);
+            Task<Boolean> task = new Task<Boolean>() {
+                @Override
+                public Boolean call() throws InterruptedException {
+                    updateMessage("Cargando documentos desde ficheros...");
+                    //updateProgress(1, 2);
 
-                boolean success = false;
+                    boolean success = false;
 
-                int nFiles = files.size();
-                int currentFile = 1;
+                    int nFiles = files.size();
+                    int currentFile = 1;
 
-                if (nFiles > 0) {
-                    success = true;
-                    for (File file : files) {
-                        updateProgress(currentFile, nFiles);
-                        dT3AddDocumentFile(file.toString());
-                        currentFile++;
+                    if (nFiles > 0) {
+                        success = true;
+                        for (File file : files) {
+                            updateProgress(currentFile, nFiles);
+                            dT3AddDocumentFile(file.toString());
+                            currentFile++;
+                        }
                     }
+                    return success;
                 }
-                return success;
-            }
-        };
+            };
 
-        task.setOnSucceeded(event -> {
-            progressBar.progressProperty().unbind();
-            progressBar.setVisible(false);
-            status.textProperty().unbind();
+            task.setOnSucceeded(event -> {
+                progressBar.progressProperty().unbind();
+                progressBar.setVisible(false);
+                status.textProperty().unbind();
 
-            Boolean success = task.getValue();
-            if (success) status.setText("Documentos añadidos satisfactoriamente.");
-            else status.setText("Los documentos no se han podido añadir.");
+                Boolean success = task.getValue();
+                if (success) status.setText("Documentos añadidos satisfactoriamente.");
+                else status.setText("Los documentos no se han podido añadir.");
 
-            updateCombos();
-            dT1LoadDocumentResults(true);
-            aT1LoadAuthorResults(true);
-        });
+                updateCombos();
+                dT1LoadDocumentResults(true);
+                aT1LoadAuthorResults(true);
+            });
 
-        status.textProperty().bind(task.messageProperty());
-        progressBar.progressProperty().bind(task.progressProperty());
+            status.textProperty().bind(task.messageProperty());
+            progressBar.progressProperty().bind(task.progressProperty());
 
-        Thread thread = new Thread(task);
-        thread.setDaemon(true);
-        thread.start();
+            Thread thread = new Thread(task);
+            thread.setDaemon(true);
+            thread.start();
+        }
     }
 
     // DONE  ############
