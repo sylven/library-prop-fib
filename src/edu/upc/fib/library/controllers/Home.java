@@ -26,6 +26,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.Set;
 
 public class Home implements Initializable {
     private Library mLibrary;
@@ -104,6 +105,8 @@ public class Home implements Initializable {
         // Llenar las listas de resultados iniciales
         dT1LoadDocumentResults(false);
         aT1LoadAuthorResults(true);
+
+        updateCombos();
     }
 
     // Actualizar las opciones de los combo boxes
@@ -355,10 +358,14 @@ public class Home implements Initializable {
         }
     }
 
-    public void dT1DocClear(ActionEvent actionEvent) {
+    public void dT1DocClear() {
         dT1DocAuthor.clear();
         dT1DocTitle.clear();
         dT1DocContent.clear();
+    }
+
+    public void dT1DocClear(ActionEvent actionEvent) {
+        dT1DocClear();
     }
 
     public void dT1Save(ActionEvent actionEvent) {
@@ -589,10 +596,13 @@ public class Home implements Initializable {
         }
     }
 
-    public void dT2DocClear(ActionEvent actionEvent) {
+    public void dT2DocClear() {
         dT2DocAuthor.clear();
         dT2DocTitle.clear();
         dT2DocContent.clear();
+    }
+    public void dT2DocClear(ActionEvent actionEvent) {
+        dT2DocClear();
     }
 
     public void dT2Save(ActionEvent actionEvent) {
@@ -940,9 +950,17 @@ public class Home implements Initializable {
         ObservableList<String> titleComboItems = FXCollections.observableArrayList();
         dT4Title.setItems(titleComboItems);
         titleComboItems.clear();
-        if (dT4Author.getValue() != null)
-            titleComboItems.addAll(mLibrary.getAuthorDocumentTitles(dT4Author.getValue().toString()));
-        else titleComboItems.addAll(mLibrary.getDocumentTitles());
+        Set<String> list;
+        if (dT4Author.getValue() != null) {
+            list = mLibrary.getAuthorDocumentTitles(dT4Author.getValue().toString());
+            if (list != null) {
+                titleComboItems.addAll(list);
+            } else {
+                titleComboItems.addAll(mLibrary.getDocumentTitles());
+            }
+        } else {
+            titleComboItems.addAll(mLibrary.getDocumentTitles());
+        }
         dT4Title.setValue(current);
     }
 
@@ -966,6 +984,9 @@ public class Home implements Initializable {
                     String author = dT4Author.getValue().toString();
                     String title = dT4Title.getValue().toString();
                     String algorithm = dT4Algorithm.getValue().toString();
+                    int algorithmInt = 1;
+                    if (algorithm.equals("A")) algorithmInt = 1;
+                    else if (algorithm.equals("B")) algorithmInt = 2;
                     int nResults = Integer.parseInt(dT4NResults.getText());
                     dT4ResultDocuments = mLibrary.getSimilarDocuments(author, title, nResults);
                     if (dT4ResultDocuments.size() == 0) {
@@ -1355,8 +1376,12 @@ public class Home implements Initializable {
         }
     }
 
-    public void aT1AuthClear(ActionEvent actionEvent) {
+    public void aT1AuthClear() {
         aT1AuthName.clear();
+    }
+
+    public void aT1AuthClear(ActionEvent actionEvent) {
+        aT1AuthClear();
     }
 
     public void aT1Save(ActionEvent actionEvent) {
@@ -1451,5 +1476,86 @@ public class Home implements Initializable {
         } else {
             status.setText("Por favor, introduce los datos para poder añadir el autor.");
         }
+    }
+
+    public void ajTLoad(ActionEvent actionEvent) {
+        File folder = new File("resources/files/docs");
+        File[] files = folder.listFiles();
+
+        if (files != null) {
+            progressBar.setProgress(0);
+            progressBar.setVisible(true);
+
+            Task<Boolean> task = new Task<Boolean>() {
+                @Override
+                public Boolean call() throws InterruptedException {
+                    updateMessage("Cargando muestra de 225 notícias...");
+
+                    boolean success = false;
+
+                    int nFiles = files.length;
+                    int currentFile = 1;
+
+                    if (nFiles > 0) {
+                        success = true;
+                        for (File file : files) {
+                            updateProgress(currentFile, nFiles);
+                            dT3AddDocumentFile(file.toString());
+                            currentFile++;
+                        }
+                    }
+                    return success;
+                }
+            };
+
+            task.setOnSucceeded(event -> {
+                progressBar.progressProperty().unbind();
+                progressBar.setVisible(false);
+                status.textProperty().unbind();
+
+                Boolean success = task.getValue();
+                if (success) status.setText("Muestra de documentos cargada satisfactoriamente.");
+                else status.setText("La muestra de documentos no se han podido añadir.");
+
+                updateCombos();
+                dT1LoadDocumentResults(true);
+                aT1LoadAuthorResults(true);
+            });
+
+            status.textProperty().bind(task.messageProperty());
+            progressBar.progressProperty().bind(task.progressProperty());
+
+            Thread thread = new Thread(task);
+            thread.setDaemon(true);
+            thread.start();
+        }
+    }
+
+    public void ajTReset(ActionEvent actionEvent) {
+        mLibrary.restartStatus();
+
+        dT1Author.setValue("");
+        dT1Title.setValue("");
+        dT1DocClear();
+        dT1LoadDocumentResults(true);
+
+        dT2Expression.clear();
+        dT2DocClear();
+        dT2LoadDocumentResults(true);
+
+        dT3DocAuthor.clear();
+        dT3DocTitle.clear();
+        dT3DocContent.clear();
+
+        dT4DocClear();
+        dT4LoadDocumentResults(true);
+
+        dT4Author.setValue("");
+        dT4Title.setValue("");
+
+        aT1Author.setValue("");
+        aT1AuthClear();
+        aT1LoadAuthorResults(true);
+        updateCombos();
     }
 }

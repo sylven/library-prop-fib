@@ -28,7 +28,7 @@
                                                          <children>
                                                             <AnchorPane prefHeight="582.0" prefWidth="600.0">
                                                                <children>
-                                                                  <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" text="?" />
+                                                                  <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" text="?" visible="false" />
                                                                   <Label layoutX="257.0" layoutY="14.0" text="Búsqueda">
                                                                      <font>
                                                                         <Font size="20.0" />
@@ -36,7 +36,7 @@
                                                                   </Label>
                                                                   <Label layoutX="14.0" layoutY="48.0" text="Introduce el autor y/o el título para realizar una búsqueda de documentos." />
                                                                   <Label layoutX="14.0" layoutY="71.0" text="Autor" />
-                                                                  <ComboBox fx:id="dT1Author" onAction="#dT1UpdateAuthorCombo" editable="true" layoutX="14.0" layoutY="88.0" prefHeight="25.0" prefWidth="572.0" />
+                                                                  <ComboBox fx:id="dT1Author" editable="true" layoutX="14.0" layoutY="88.0" onAction="#dT1UpdateAuthorCombo" prefHeight="25.0" prefWidth="572.0" />
                                                                   <Button fx:id="dT1AuthorClear" layoutX="539.0" layoutY="88.0" mnemonicParsing="false" onAction="#dT1AuthorClear" text="X" />
                                                                   <Label layoutX="14.0" layoutY="121.0" text="Título" />
                                                                   <ComboBox fx:id="dT1Title" editable="true" layoutX="14.0" layoutY="138.0" prefHeight="25.0" prefWidth="572.0" />
@@ -52,7 +52,7 @@
                                                                         <TableView fx:id="dT1TableView" layoutX="214.0" layoutY="61.0" prefHeight="314.0" prefWidth="572.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                                           <columns>
                                                                             <TableColumn fx:id="dT1TableViewTitle" prefWidth="394.0" text="Título" />
-                                                                            <TableColumn fx:id="dT1TableViewAuthor" prefWidth="176.0" text="Autor" />
+                                                                            <TableColumn fx:id="dT1TableViewAuthor" prefWidth="163.0" text="Autor" />
                                                                           </columns>
                                                                         </TableView>
                                                                      </children>
@@ -97,7 +97,7 @@
                                                    <children>
                                                       <AnchorPane prefHeight="582.0" prefWidth="600.0">
                                                          <children>
-                                                                  <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" text="?" />
+                                                                  <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" text="?" visible="false" />
                                                             <Label layoutX="150.0" layoutY="14.0" text="Búsqueda por expresión booleana">
                                                                <font>
                                                                   <Font size="20.0" />
@@ -119,7 +119,7 @@
                                                                   <TableView fx:id="dT2TableView" layoutX="214.0" layoutY="61.0" prefHeight="314.0" prefWidth="572.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                                     <columns>
                                                                       <TableColumn fx:id="dT2TableViewTitle" prefWidth="394.0" text="Título" />
-                                                                      <TableColumn fx:id="dT2TableViewAuthor" minWidth="0.0" prefWidth="176.0" text="Autor" />
+                                                                      <TableColumn fx:id="dT2TableViewAuthor" minWidth="0.0" prefWidth="163.0" text="Autor" />
                                                                     </columns>
                                                                   </TableView>
                                                                </children>
@@ -164,14 +164,14 @@
                                                    <children>
                                                       <AnchorPane prefHeight="582.0" prefWidth="600.0">
                                                          <children>
-                                                                  <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" text="?" />
+                                                                  <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" text="?" visible="false" />
                                                             <Label layoutX="213.0" layoutY="14.0" text="Añadir documentos">
                                                                <font>
                                                                   <Font size="20.0" />
                                                                </font>
                                                             </Label>
                                                             <Button fx:id="dT3AddFile" layoutX="197.0" layoutY="58.0" mnemonicParsing="false" onAction="#dT3AddFile" text="Añadir documento desde un fichero" />
-                                                                  <Button fx:id="dT3AddFolder" layoutX="190.0" layoutY="96.0" mnemonicParsing="false" onAction="#dT3AddFolder" text="Añadir documentos desde una carpeta" />
+                                                                  <Button fx:id="dT3AddFolder" layoutX="165.0" layoutY="99.0" mnemonicParsing="false" onAction="#dT3AddFolder" text="Añadir múltiples documentos desde una carpeta" />
                                                             <Label layoutX="143.0" layoutY="145.0" text="Arrastra documentos para añadirlos">
                                                                <font>
                                                                   <Font size="20.0" />
@@ -222,7 +222,7 @@
                                                          <children>
                                                             <AnchorPane prefHeight="582.0" prefWidth="600.0">
                                                                <children>
-                                                                  <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" text="?" />
+                                                                  <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" text="?" visible="false" />
                                                                   <Label layoutX="198.0" layoutY="14.0" text="Documentos parecidos">
                                                                      <font>
                                                                         <Font size="20.0" />
@@ -230,11 +230,11 @@
                                                                   </Label>
                                                                   <Label layoutX="14.0" layoutY="48.0" text="Selecciona un documento para buscar otros documentos parecidos" />
                                                                   <Label layoutX="14.0" layoutY="71.0" text="Autor" />
-                                                                  <ComboBox fx:id="dT4Author" onAction="#dT4UpdateAuthorCombo" layoutX="14.0" layoutY="88.0" prefHeight="25.0" prefWidth="572.0" />
+                                                                  <ComboBox fx:id="dT4Author" layoutX="14.0" layoutY="88.0" onAction="#dT4UpdateAuthorCombo" prefHeight="25.0" prefWidth="572.0" />
                                                                   <Label layoutX="14.0" layoutY="121.0" text="Título" />
                                                                   <ComboBox fx:id="dT4Title" layoutX="14.0" layoutY="138.0" prefHeight="25.0" prefWidth="572.0" />
-                                                                  <Label layoutX="244.0" layoutY="184.0" text="Usar algoritmo" />
-                                                                  <ComboBox fx:id="dT4Algorithm" layoutX="331.0" layoutY="180.0" prefHeight="25.0" prefWidth="53.0" />
+                                                                  <Label layoutX="244.0" layoutY="184.0" text="Usar algoritmo" visible="false" />
+                                                                  <ComboBox fx:id="dT4Algorithm" layoutX="331.0" layoutY="180.0" prefHeight="25.0" prefWidth="53.0" visible="false" />
                                                                   <Label layoutX="428.0" layoutY="184.0" text="Mostrar" />
                                                                   <TextField fx:id="dT4NResults" layoutX="477.0" layoutY="180.0" prefHeight="25.0" prefWidth="47.0" text="5" />
                                                                   <Label layoutX="530.0" layoutY="184.0" text="resultados" />
@@ -249,8 +249,8 @@
                                                                         <TableView fx:id="dT4TableView" layoutX="214.0" layoutY="61.0" prefHeight="314.0" prefWidth="572.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                                           <columns>
                                                                             <TableColumn fx:id="dT4TableViewTitle" prefWidth="324.0" text="Título" />
-                                                                            <TableColumn fx:id="dT4TableViewAuthor" minWidth="0.0" prefWidth="176.0" text="Autor" />
-                                                                            <TableColumn fx:id="dT4TableViewSimilarity" minWidth="0.0" prefWidth="70.0" text="Similitud" style="-fx-alignment: CENTER-RIGHT;" />
+                                                                            <TableColumn fx:id="dT4TableViewAuthor" minWidth="0.0" prefWidth="163.0" text="Autor" />
+                                                                            <TableColumn fx:id="dT4TableViewSimilarity" minWidth="0.0" prefWidth="70.0" style="-fx-alignment: CENTER-RIGHT;" text="Similitud" />
                                                                           </columns>
                                                                         </TableView>
                                                                      </children>
@@ -307,7 +307,7 @@
                                                          <children>
                                                             <AnchorPane prefHeight="582.0" prefWidth="600.0">
                                                                <children>
-                                                                  <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" text="?" />
+                                                                  <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" text="?" visible="false" />
                                                                   <Label layoutX="257.0" layoutY="14.0" text="Búsqueda">
                                                                      <font>
                                                                         <Font size="20.0" />
@@ -327,7 +327,7 @@
                                                                      <children>
                                                                         <TableView fx:id="aT1TableView" layoutX="214.0" layoutY="61.0" prefHeight="314.0" prefWidth="572.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                                           <columns>
-                                                                            <TableColumn fx:id="aT1TableViewAuthor" minWidth="0.0" prefWidth="570.0" text="Autor" />
+                                                                            <TableColumn fx:id="aT1TableViewAuthor" minWidth="0.0" prefWidth="557.0" text="Autor" />
                                                                           </columns>
                                                                         </TableView>
                                                                      </children>
@@ -364,7 +364,7 @@
                                                    <children>
                                                       <AnchorPane prefHeight="582.0" prefWidth="600.0">
                                                          <children>
-                                                                  <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" text="?" />
+                                                                  <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" text="?" visible="false" />
                                                             <Label layoutX="235.0" layoutY="12.0" text="Añadir autores">
                                                                <font>
                                                                   <Font size="20.0" />
@@ -400,12 +400,11 @@
                       </Tab>
                         <Tab text="Ajustes">
                           <content>
-                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-                          </content>
-                        </Tab>
-                        <Tab text="Ayuda">
-                          <content>
-                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                 <children>
+                                    <Button fx:id="ajTLoad" layoutX="509.0" layoutY="65.0" mnemonicParsing="false" onAction="#ajTLoad" text="Cargar muestra de 225 notícias" />
+                                    <Button fx:id="ajTReset" layoutX="548.0" layoutY="118.0" mnemonicParsing="false" onAction="#ajTReset" text="Vacíar biblioteca" />
+                                 </children></AnchorPane>
                           </content>
                         </Tab>
                         <Tab text="Acerca de">

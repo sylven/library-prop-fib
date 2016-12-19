@@ -131,7 +131,11 @@ public class Library implements Serializable {
 
     // Mejorar para incluir a los autores?
     public Set<String> getAuthorDocumentTitles(String authorName) {
-        return mAuthors.getAuthorDocumentTitles(authorName);
+        if (existsAuthor(authorName)) return mAuthors.getAuthorDocumentTitles(authorName);
+        else {
+            Set<String> s = Collections.emptySet();
+            return s;
+        }
     }
 
     public boolean existsAuthor(String authorName) {
