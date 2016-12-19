@@ -18,10 +18,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Pair;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -1479,56 +1476,75 @@ public class Home implements Initializable {
     }
 
     public void ajTLoad(ActionEvent actionEvent) {
-        File folder = new File("resources/files/docs");
-        File[] files = folder.listFiles();
-
-        if (files != null) {
-            progressBar.setProgress(0);
-            progressBar.setVisible(true);
-
-            Task<Boolean> task = new Task<Boolean>() {
-                @Override
-                public Boolean call() throws InterruptedException {
-                    updateMessage("Cargando muestra de 225 notícias...");
-
-                    boolean success = false;
-
-                    int nFiles = files.length;
-                    int currentFile = 1;
-
-                    if (nFiles > 0) {
-                        success = true;
-                        for (File file : files) {
-                            updateProgress(currentFile, nFiles);
-                            dT3AddDocumentFile(file.toString());
-                            currentFile++;
-                        }
-                    }
-                    return success;
+        /*InputStream iS = this.getClass().getResourceAsStream("/files/docs");
+        if (iS != null) {
+            try (BufferedReader br = new BufferedReader(new InputStreamReader(iS))) {
+                String line = br.readLine();
+                while (line != null) {
+                    connectorWords.add(new String(line).toLowerCase());
+                    line = br.readLine();
                 }
-            };
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }*/
 
-            task.setOnSucceeded(event -> {
-                progressBar.progressProperty().unbind();
-                progressBar.setVisible(false);
-                status.textProperty().unbind();
 
-                Boolean success = task.getValue();
-                if (success) status.setText("Muestra de documentos cargada satisfactoriamente.");
-                else status.setText("La muestra de documentos no se han podido añadir.");
 
-                updateCombos();
-                dT1LoadDocumentResults(true);
-                aT1LoadAuthorResults(true);
-            });
-
-            status.textProperty().bind(task.messageProperty());
-            progressBar.progressProperty().bind(task.progressProperty());
-
-            Thread thread = new Thread(task);
-            thread.setDaemon(true);
-            thread.start();
-        }
+        InputStream iS = this.getClass().getResourceAsStream("/files/docs/5 Ideas para envolver tus regalos de Navidad - SAPOS Y PRINCESAS.txt");
+        String s = "";
+        //File folder = new File("resources/files/docs");
+//        File folder = new File(this.getClass().getResource("/files/docs"));
+//
+//        File[] files = folder.listFiles();
+//
+//        if (files != null) {
+//            progressBar.setProgress(0);
+//            progressBar.setVisible(true);
+//
+//            Task<Boolean> task = new Task<Boolean>() {
+//                @Override
+//                public Boolean call() throws InterruptedException {
+//                    updateMessage("Cargando muestra de 225 notícias...");
+//
+//                    boolean success = false;
+//
+//                    int nFiles = files.length;
+//                    int currentFile = 1;
+//
+//                    if (nFiles > 0) {
+//                        success = true;
+//                        for (File file : files) {
+//                            updateProgress(currentFile, nFiles);
+//                            dT3AddDocumentFile(file.toString());
+//                            currentFile++;
+//                        }
+//                    }
+//                    return success;
+//                }
+//            };
+//
+//            task.setOnSucceeded(event -> {
+//                progressBar.progressProperty().unbind();
+//                progressBar.setVisible(false);
+//                status.textProperty().unbind();
+//
+//                Boolean success = task.getValue();
+//                if (success) status.setText("Muestra de documentos cargada satisfactoriamente.");
+//                else status.setText("La muestra de documentos no se han podido añadir.");
+//
+//                updateCombos();
+//                dT1LoadDocumentResults(true);
+//                aT1LoadAuthorResults(true);
+//            });
+//
+//            status.textProperty().bind(task.messageProperty());
+//            progressBar.progressProperty().bind(task.progressProperty());
+//
+//            Thread thread = new Thread(task);
+//            thread.setDaemon(true);
+//            thread.start();
+//        }
     }
 
     public void ajTReset(ActionEvent actionEvent) {
