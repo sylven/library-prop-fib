@@ -44,10 +44,26 @@ public class Sentence implements Serializable {
     public String toString() {
         // Usar StringBuilder ??????????????????????????????????????????????????????????????????????????
         String ret = "";
+        boolean openQuotes = false;
         for (String word : mWords) {
+
             if (ret.equals("")) {
                 ret = word;
-            } else if (!ret.equals("") && (ret.substring(ret.length() - 1).equals("(") || ret.substring(ret.length() - 1).equals("«") || word.equals("!") || word.equals("?") || word.equals(",") || word.equals(".") || word.equals(":") || word.equals(")"))) {
+                if (word.equals("\"")) openQuotes = true;
+            } else if (word.equals("\"")) {
+                if (openQuotes) {
+                    ret += "\"";
+                    openQuotes = false;
+                } else {
+                    ret += " \"";
+                    openQuotes = true;
+                }
+            } else if (ret.substring(ret.length() - 1).equals("(") || ret.substring(ret.length() - 1).equals("«")
+                    || ret.substring(ret.length() - 1).equals("¡") || ret.substring(ret.length() - 1).equals("¿")
+                    //|| (ret.substring(ret.length() - 1).equals("\"") && ((ret.length() == 1) || (ret.length() > 1 && ret.substring(ret.length() - 2).equals(" "))))
+                    || (ret.substring(ret.length() - 1).equals("\"") && openQuotes)
+                    || word.equals("!") || word.equals("?") || word.equals(",") || word.equals(".")
+                    || word.equals(":") || word.equals(")") || word.equals("»")) {
                 // Controlar de otra forma los momentos en los que no hay que poner espacio
                 ret += word;
             } else {

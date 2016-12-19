@@ -10,7 +10,6 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 public class Main extends Application {
-
     private Home home;
 
     @Override
@@ -32,7 +31,7 @@ public class Main extends Application {
 
     @Override
     public void stop() {
-        //home.saveStatus();
+        home.saveStatus();
     }
 
     public static void main(String[] args) {

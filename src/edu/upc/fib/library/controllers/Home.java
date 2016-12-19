@@ -72,8 +72,6 @@ public class Home implements Initializable {
     @FXML private TextArea dT4DocContent;
     private String dT4CurrentAuthor, dT4CurrentTitle, dT4CurrentContent;
 
-    @FXML private TabPane authorsTab;
-
     @FXML private ComboBox aT1Author;
     @FXML private TableView<Integer> aT1TableView;
     @FXML private TableColumn<Integer, String> aT1TableViewAuthor;
@@ -88,27 +86,6 @@ public class Home implements Initializable {
 
     public Home() {
         mLibrary = new Library();
-        mLibrary.addDocument("a", "a", "aaa coche");
-        mLibrary.addDocument("b", "b", "aaa cosa");
-        mLibrary.addDocument("c", "c", "cosa coche");
-
-//        String content;
-//        content = "Donald John Trump (Nueva York, 14 de junio de 1946) es un empresario, político, personalidad televisiva y escritor estadounidense.\n\nSiendo el presidente electo de los Estados Unidos de América; se convertirá en el 45° presidente de la Unión tras su toma de posesión, programada para el 20 de enero de 2017. Es presidente de la Trump Organization y fundador de la empresa de hotel y juegos de azar Trump Entertainment Resorts, que es ahora propiedad de Carl Icahn. Trump es una celebridad televisiva, y entre otras cosas fue el presentador del reality show The Apprentice, de la NBC, entre 2004 y 2015. Es hijo de un empresario inmobiliario de Nueva York,4 en cuya compañía, Elizabeth Trump & Son, trabajó mientras estudiaba en la Escuela de Negocios Wharton de la Universidad de Pensilvania. En 1968, se unió oficialmente a esa sociedad,5 que controla desde 1971, cuando la renombró Trump Organization. En los años 1990 la empresa entró en bancarrota comercial, pero en la década siguiente se recuperó, lo que le reportó una fortuna de varios miles de millones de dólares. Su campaña para obtener la candidatura republicana a la Casa Blanca para las elecciones de 2016 se vio caracterizada desde su inicio por una gran atención mediática a nivel nacional e internacional debido a la sucesión de declaraciones polémicas por parte de Trump. Sus propuestas más repetidas consisten en la construcción de un muro a lo largo de la frontera con México y una política dura contra la inmigración ilegal, además de una prohibición temporal de la entrada de musulmanes en los Estados Unidos. En lo económico, aboga por modificar la política comercial del país y fortalecer la producción nacional en detrimento de la deslocalización, en consonancia con posiciones proteccionistas.";
-//        mLibrary.addDocument("Wikipediaa", "Donald Trump", content);
-//
-//        content = "El presidente de los Estados Unidos (en inglés, President of the United States; acrónimo: POTUS) es el jefe de Estado y de Gobierno de los Estados Unidos. Es el más alto cargo político del país por influencia y reconocimiento. El presidente lidera el poder ejecutivo del Gobierno federal. Entre otros poderes y responsabilidades, el Artículo II de la Constitución de los Estados Unidos encarga al presidente la «fiel ejecución» de la ley federal, hace del presidente el comandante en jefe de las Fuerzas Armadas, lo autoriza a nombrar oficiales ejecutivos y judiciales con el consejo y consentimiento del Senado, lo sitúa al frente de la política exterior de los Estados Unidos, y permite al presidente conceder indultos o moratorias. El presidente es elegido mediante sufragio indirecto por un colegio electoral (o por la Cámara de Representantes si el colegio electoral no concede la mayoría de votos a ningún candidato) para un mandato de cuatro años. Desde la ratificación de la Vigesimosegunda Enmienda en 1951, ninguna persona puede ser elegida para el cargo de presidente más de dos veces. En caso de muerte, destitución, dimisión o renuncia de un presidente, el vicepresidente asume la presidencia. Hubo cuarenta y tres personas que asumieron el cargo y cuarenta y cuatro presidencias. De las personas elegidas para el cargo, cuatro murieron durante su mandato por causas naturales, uno dimitió y cuatro fueron asesinados. El primer presidente fue George Washington, que fue investido en 1789 después de un voto unánime del colegio electoral. William Henry Harrison fue el que menos tiempo permaneció en el cargo, con tan solo 32 días, y Franklin D. Roosevelt, con sus 12 años en el puesto, fue el que permaneció por más tiempo y el único presidente que sirvió por más de dos mandatos (ganó cuatro veces las elecciones presidenciales). El actual presidente es el demócrata Barack Obama, que fue investido para el puesto el 20 de enero de 2009. El 9 de noviembre de 2016, el candidato por el Partido Republicano, Donald Trump, resultó electo en las elecciones presidenciales. Desde principios del siglo XX, el papel hegemónico de los Estados Unidos en el escenario político y económico internacional ha llevado al presidente de este país a ser una figura conocida a nivel global y, debido a la condición del país como única superpotencia, en 2009 la revista Forbes calificaba a su titular como «la persona más poderosa del mundo».";
-//        mLibrary.addDocument("Silviu", "Presidente de los Estados Unidos", content);
-//
-//        content = "Android es un sistema operativo basado en el núcleo Linux. Fue diseñado principalmente para dispositivos móviles con pantalla táctil, como teléfonos inteligentes, tablets o tabléfonos; y también para relojes inteligentes, televisores y automóviles. Inicialmente fue desarrollado por Android Inc., empresa que Google respaldó económicamente y más tarde, en 2005, la compró. Android fue presentado en 2007 junto la fundación del Open Handset Alliance (un consorcio de compañías de hardware, software y telecomunicaciones) para avanzar en los estándares abiertos de los dispositivos móviles. El primer móvil con el sistema operativo Android fue el HTC Dream y se vendió en octubre de 2008. Los dispositivos de Android venden más que las ventas combinadas de Windows Phone e IOS. El éxito del sistema operativo se ha convertido en objeto de litigios sobre patentes en el marco de las llamadas «Guerras por patentes de teléfonos inteligentes» (en inglés, Smartphone patent wars) entre las empresas de tecnología. Según documentos secretos filtrados en 2013 y 2014, el sistema operativo es uno de los objetivos de las agencias de inteligencia internacionales. La versión básica de Android es conocida como Android Open Source Project (AOSP). El 25 de junio de 2014 en la Conferencia de Desarrolladores Google I/O, Google mostró una evolución de la marca Android, con el fin de unificar tanto el hardware como el software y ampliar mercados.";
-//        mLibrary.addDocument("Silviu", "Android", content);
-//
-//        content = "iOS es un sistema operativo móvil de la multinacional Apple Inc. Originalmente desarrollado para el iPhone (iPhone OS), después se ha usado en dispositivos como el iPod touch y el iPad. No permite la instalación de iOS en hardware de terceros. Tenía el 26 % de cuota de mercado de sistemas operativos móviles vendidos en el último cuatrimestre de 2010, detrás de Android y Windows Phone. Actualmente su sistema operativo se encuentra en la décima versión, mejor conocida como iOS 10. Apple anunció el lunes 21 de septiembre de 2015 que su nuevo sistema operativo iOS 9 ya ha superado el 70 % de adopción dentro de sus dispositivos compatibles. Según la marca de Cupertino, 2 de cada 3 dispositivos tienen iOS 9 instalado. El 23 de septiembre de 2015 (tan solo una semana después de la salida de iOS 9), Apple saca iOS 9.0.1 para solucionar problemas relacionados con las alarmas y temporizadores. Los elementos de control consisten de deslizadores, interruptores y botones. La respuesta a las órdenes del usuario es inmediata y provee una interfaz fluida. La interacción con el sistema operativo incluye gestos como deslices, toques, pellizcos, los cuales tienen definiciones diferentes dependiendo del contexto de la interfaz. Se utilizan acelerómetros internos para hacer que algunas aplicaciones respondan a sacudir el dispositivo (por ejemplo, para el comando deshacer) o rotarlo en tres dimensiones (un resultado común es cambiar de modo vertical al apaisado u horizontal). En el marco de las filtraciones acerca de los programas de vigilancia mundial de 2013-2014 de Edward Snowden, Der Spiegel publicó que la NSA estadounidense tiene grupos de trabajo dedicados a descifrar los sistemas de seguridad de iOS; además tiene pequeños programas conocidos como scripts que permiten a la agencia vigilar a los usuarios de las distintas versiones del sistema iOS su geolocalización, notas de voz, fotos y otras aplicaciones como Google Earth, Facebook o Yahoo! Messenger. iOS se deriva de macOS, que a su vez está basado en Darwin BSD, y por lo tanto es un sistema operativo Tipo Unix. iOS cuenta con cuatro capas de abstracción: la capa del núcleo del sistema operativo, la capa de \"Servicios Principales\", la capa de \"Medios\" y la capa de \"Cocoa Touch\".";
-//        mLibrary.addDocument("Wikipediaa", "iOs", content);
-//
-//        content = "Un automóvil de turismo, también conocido simplemente como turismo o automóvil o automotor, es el tipo de automóvil destinado al transporte de personas, con al menos cuatro ruedas y un máximo de nueve plazas incluido el conductor.";
-//        mLibrary.addDocument("Wikipedia", "Automóvil de turismo", content);
-
-        //mLibrary.removeAuthor("Wikipediaa");
     }
 
     public void saveStatus() {
@@ -118,30 +95,18 @@ public class Home implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         // Llenar los comboboxes
-        ObservableList<String> dT1TitleComboItems = FXCollections.observableArrayList();
-        dT1Title.setItems(dT1TitleComboItems);
-        dT1TitleComboItems.addAll(mLibrary.getDocumentTitles());
-        ObservableList<String> dT1AuthorComboItems = FXCollections.observableArrayList();
-        dT1Author.setItems(dT1AuthorComboItems);
-        dT1AuthorComboItems.addAll(mLibrary.getAuthorNames());
-
-        dT4UpdateAuthorCombo();
-        dT4UpdateTitleCombo();
         ObservableList<String> dT4AlgorithmComboItems = FXCollections.observableArrayList();
         dT4Algorithm.setItems(dT4AlgorithmComboItems);
         dT4AlgorithmComboItems.add("A");
         dT4AlgorithmComboItems.add("B");
         dT4Algorithm.setValue("A");
 
-        ObservableList<String> aT1AuthorComboItems = FXCollections.observableArrayList();
-        aT1Author.setItems(aT1AuthorComboItems);
-        aT1AuthorComboItems.addAll(mLibrary.getAuthorNames());
-
-        // Llenar las listas de resultados
+        // Llenar las listas de resultados iniciales
         dT1LoadDocumentResults(false);
         aT1LoadAuthorResults(true);
     }
 
+    // Actualizar las opciones de los combo boxes
     public void updateCombos() {
         dT1UpdateAuthorCombo();
         dT1UpdateTitleCombo();
@@ -153,12 +118,10 @@ public class Home implements Initializable {
 
     // dT1
 
-    // DONE ############
     public void dT1AuthorClear(ActionEvent actionEvent) {
         dT1Author.setValue("");
     }
 
-    // DONE ############
     public void dT1UpdateAuthorCombo() {
         String current = (String) dT1Author.getValue();
         ObservableList<String> authorComboItems = FXCollections.observableArrayList();
@@ -167,28 +130,34 @@ public class Home implements Initializable {
         dT1Author.setValue(current);
     }
 
-    // DONE ############
+    public void dT1UpdateAuthorCombo(ActionEvent actionEvent) {
+        dT1UpdateTitleCombo();
+        dT1Title.setValue("");
+    }
+
     @FXML
     public void dT1TitleClear(ActionEvent actionEvent) {
         dT1Title.setValue("");
     }
 
-    // DONE ############
     @FXML
     private void dT1UpdateTitleCombo() {
         String current = (String) dT1Title.getValue();
         ObservableList<String> titleComboItems = FXCollections.observableArrayList();
         dT1Title.setItems(titleComboItems);
+//        if (dT1Author.getValue() != null && mLibrary.existsAuthor(dT1Author.getValue().toString())) {
+//            titleComboItems.addAll(mLibrary.getAuthorDocumentTitles(dT4Author.getValue().toString()));
+//        } else {
+//            titleComboItems.addAll(mLibrary.getDocumentTitles());
+//        }
         titleComboItems.addAll(mLibrary.getDocumentTitles());
         dT1Title.setValue(current);
     }
 
-    // DONE ############
     public void dT1Search(ActionEvent actionEvent) {
         dT1LoadDocumentResults(false);
     }
 
-    // DONE ############
     public void dT1LoadDocumentResults(boolean isReload) {
         if (!isReload) {
             progressBar.setProgress(0);
@@ -198,11 +167,8 @@ public class Home implements Initializable {
         Task<Void> task = new Task<Void>() {
             @Override public Void call() throws InterruptedException {
                 if (!isReload) updateMessage("Realizando búsqueda de documentos...");
-                //updateProgress(1, 2);
 
                 dT1TableView.getItems().clear();
-
-                //status.setText("Realizando búsqueda de documentos...");
 
                 // Si solo esta puesto el autor => Buscar todos los autores con ese prefijo => Mostrar los documentos de todos ellos
                 if (dT1Title.getValue() == null && dT1Author.getValue() != null) {
@@ -219,7 +185,6 @@ public class Home implements Initializable {
                         Integer titleIndex = cellData.getValue();
                         return new ReadOnlyStringWrapper(dT1ResultDocuments.get(titleIndex).getValue());
                     });
-                    //status.setText("Búsqueda finalizada.");
                     if (!isReload) updateMessage("Búsqueda finalizada.");
                 }
                 // Si solo esta puesto el titulo => Mostrar todos los documentos con ese prefijo
@@ -237,7 +202,6 @@ public class Home implements Initializable {
                         Integer titleIndex = cellData.getValue();
                         return new ReadOnlyStringWrapper(dT1ResultDocuments.get(titleIndex).getValue());
                     });
-                    //status.setText("Búsqueda finalizada.");
                     if (!isReload) updateMessage("Búsqueda finalizada.");
                 }
                 // Si esta puesto el titulo y el autor => Buscar todos los autores con ese prefijo y mostrar su documentos con ese prefijo
@@ -256,7 +220,6 @@ public class Home implements Initializable {
                         Integer titleIndex = cellData.getValue();
                         return new ReadOnlyStringWrapper(dT1ResultDocuments.get(titleIndex).getValue());
                     });
-                    //status.setText("Búsqueda finalizada.");
                     if (!isReload) updateMessage("Búsqueda finalizada.");
                 }
                 // Si no esta puesto ninguno => Mostrar todos los documentos
@@ -265,26 +228,16 @@ public class Home implements Initializable {
                     for(int i = 0; i < dT1ResultDocuments.size(); i++){
                         dT1TableView.getItems().add(i);
                     }
-                    //TableColumn<Integer, String> dT1TableViewTitle = new TableColumn<>("Título");
-                    //dT1TableViewTitle.setPrefWidth(394);
                     dT1TableViewTitle.setCellValueFactory(cellData -> {
                         Integer titleIndex = cellData.getValue();
                         return new ReadOnlyStringWrapper(dT1ResultDocuments.get(titleIndex).getKey());
                     });
-                    //TableColumn<Integer, String> dT1TableViewAuthor = new TableColumn<>("Autor");
-                    //dT1TableViewTitle.setPrefWidth(176);
                     dT1TableViewAuthor.setCellValueFactory(cellData -> {
                         Integer titleIndex = cellData.getValue();
                         return new ReadOnlyStringWrapper(dT1ResultDocuments.get(titleIndex).getValue());
                     });
-                    //status.setText("Carga de lista completa de documentos finalizada (campos de búsqueda vacíos).");
                     if (!isReload) updateMessage("Se muestra la lista completa de documentos.");
-                    //dT1TableView.getColumns().addAll(dT1TableViewTitle, dT1TableViewAuthor);
                 }
-
-                //updateMessage("Datos del programa guardados satisfactoriamente.");
-                //updateProgress(2, 2);
-
                 return null;
             }
         };
@@ -295,8 +248,6 @@ public class Home implements Initializable {
                 progressBar.setVisible(false);
                 status.textProperty().unbind();
             }
-            //status.textProperty().unbind();
-            //status.setText("Documento añadido satisfactoriamente.");
         });
 
         if (!isReload) {
@@ -309,7 +260,6 @@ public class Home implements Initializable {
         thread.start();
     }
 
-    // DONE ############
     public void dT1Remove(ActionEvent actionEvent) {
         if (dT1TableView.getSelectionModel().getSelectedIndex() != -1) {
             progressBar.setProgress(0);
@@ -358,7 +308,6 @@ public class Home implements Initializable {
         }
     }
 
-    // DONE ############
     public void dT1Show(ActionEvent actionEvent) {
         if (dT1TableView.getSelectionModel().getSelectedIndex() != -1) {
             progressBar.setProgress(0);
@@ -406,14 +355,12 @@ public class Home implements Initializable {
         }
     }
 
-    // DONE  ############
     public void dT1DocClear(ActionEvent actionEvent) {
         dT1DocAuthor.clear();
         dT1DocTitle.clear();
         dT1DocContent.clear();
     }
 
-    // DONE  ############
     public void dT1Save(ActionEvent actionEvent) {
         if (!dT1DocAuthor.getText().isEmpty() && !dT1DocTitle.getText().isEmpty() && !dT1DocContent.getText().isEmpty()) {
             progressBar.setProgress(0);
@@ -465,7 +412,6 @@ public class Home implements Initializable {
         }
     }
 
-    // DONE  ############
     public void dT1Similars(ActionEvent actionEvent) {
         if (!dT1DocAuthor.getText().isEmpty() && !dT1DocTitle.getText().isEmpty() && !dT1DocContent.getText().isEmpty()) {
             dT4Author.setValue(dT1CurrentAuthor);
@@ -481,17 +427,14 @@ public class Home implements Initializable {
 
     // dT2
 
-    // DONE  ############
     public void dT2ExpressionClear(ActionEvent actionEvent) {
         dT2Expression.clear();
     }
 
-    // DONE  ############
     public void dT2Search(ActionEvent actionEvent) {
         dT2LoadDocumentResults(false);
     }
 
-    // DONE  ############
     public void dT2LoadDocumentResults(boolean isReload) {
         if (!isReload) {
             progressBar.setProgress(0);
@@ -501,11 +444,8 @@ public class Home implements Initializable {
         Task<Void> task = new Task<Void>() {
             @Override public Void call() throws InterruptedException {
                 if (!isReload) updateMessage("Realizando búsqueda de documentos...");
-                //updateProgress(1, 2);
 
                 dT2TableView.getItems().clear();
-
-                //status.setText("Realizando búsqueda de documentos...");
 
                 // Si solo esta puesto el autor => Buscar todos los autores con ese prefijo => Mostrar los documentos de todos ellos
                 if (dT2Expression.getText().equals("")) {
@@ -552,7 +492,6 @@ public class Home implements Initializable {
         thread.start();
     }
 
-    // DONE  ############
     public void dT2Remove(ActionEvent actionEvent) {
         if (dT2TableView.getSelectionModel().getSelectedIndex() != -1) {
             progressBar.setProgress(0);
@@ -603,7 +542,6 @@ public class Home implements Initializable {
         }
     }
 
-    // DONE  ############
     public void dT2Show(ActionEvent actionEvent) {
         if (dT2TableView.getSelectionModel().getSelectedIndex() != -1) {
             progressBar.setProgress(0);
@@ -651,14 +589,12 @@ public class Home implements Initializable {
         }
     }
 
-    // DONE  ############
     public void dT2DocClear(ActionEvent actionEvent) {
         dT2DocAuthor.clear();
         dT2DocTitle.clear();
         dT2DocContent.clear();
     }
 
-    // DONE  ############
     public void dT2Save(ActionEvent actionEvent) {
         if (!dT2DocAuthor.getText().isEmpty() && !dT2DocTitle.getText().isEmpty() && !dT2DocContent.getText().isEmpty()) {
             progressBar.setProgress(0);
@@ -711,7 +647,6 @@ public class Home implements Initializable {
         }
     }
 
-    // DONE  ############
     public void dT2Similars(ActionEvent actionEvent) {
         if (!dT2DocAuthor.getText().isEmpty() && !dT2DocTitle.getText().isEmpty() && !dT2DocContent.getText().isEmpty()) {
             dT4Author.setValue(dT2CurrentAuthor);
@@ -726,7 +661,6 @@ public class Home implements Initializable {
 
     // dT3
 
-    // DONE  ############
     public void dT3AddFile(ActionEvent actionEvent) {
         FileChooser fileChooser = new FileChooser();
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Text Files", "*.txt"));
@@ -778,7 +712,6 @@ public class Home implements Initializable {
         }
     }
 
-    // DONE  ############
     public void dT3AddFolder(ActionEvent actionEvent) {
         FileChooser fileChooser = new FileChooser();
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Text Files", "*.txt"));
@@ -793,7 +726,6 @@ public class Home implements Initializable {
                 @Override
                 public Boolean call() throws InterruptedException {
                     updateMessage("Cargando documentos desde ficheros...");
-                    //updateProgress(1, 2);
 
                     boolean success = false;
 
@@ -835,7 +767,6 @@ public class Home implements Initializable {
         }
     }
 
-    // DONE  ############
     public void dT3DragOver(DragEvent e) {
         final Dragboard db = e.getDragboard();
 
@@ -856,12 +787,10 @@ public class Home implements Initializable {
         }
     }
 
-    // DONE  ############
     public void dT3DragExited(DragEvent e) {
         dT3Drag.setStyle("-fx-border-color: #C6C6C6;");
     }
 
-    // DONE  ############
     public void dT3DragDropped(DragEvent e) {
         final Dragboard db = e.getDragboard();
         List<File> files = db.getFiles();
@@ -917,7 +846,6 @@ public class Home implements Initializable {
         thread.start();
     }
 
-    // DONE  ############
     public void dT3AddDocumentFile(String path) {
         try (BufferedReader br = new BufferedReader(new FileReader(path))) {
             String author = br.readLine();
@@ -938,7 +866,6 @@ public class Home implements Initializable {
         }
     }
 
-    // DONE  ############
     public void dT3Add(ActionEvent actionEvent) {
         if (!dT3DocAuthor.getText().isEmpty() && !dT3DocTitle.getText().isEmpty() && !dT3DocContent.getText().isEmpty()) {
             progressBar.setProgress(0);
@@ -995,7 +922,6 @@ public class Home implements Initializable {
 
     // dT4
 
-    // DONE  ############
     public void dT4UpdateAuthorCombo() {
         String current = (String) dT4Author.getValue();
         ObservableList<String> authorComboItems = FXCollections.observableArrayList();
@@ -1004,21 +930,26 @@ public class Home implements Initializable {
         dT4Author.setValue(current);
     }
 
-    // DONE  ############
+    public void dT4UpdateAuthorCombo(ActionEvent actionEvent) {
+        dT4UpdateTitleCombo();
+        dT4Title.setValue("");
+    }
+
     public void dT4UpdateTitleCombo() {
         String current = (String) dT4Title.getValue();
         ObservableList<String> titleComboItems = FXCollections.observableArrayList();
         dT4Title.setItems(titleComboItems);
-        titleComboItems.addAll(mLibrary.getDocumentTitles());
+        titleComboItems.clear();
+        if (dT4Author.getValue() != null)
+            titleComboItems.addAll(mLibrary.getAuthorDocumentTitles(dT4Author.getValue().toString()));
+        else titleComboItems.addAll(mLibrary.getDocumentTitles());
         dT4Title.setValue(current);
     }
 
-    // DONE  ############
     public void dT4Search(ActionEvent actionEvent) {
         dT4LoadDocumentResults(false);
     }
 
-    // DONE  ############
     public void dT4LoadDocumentResults(boolean isReload) {
         if (!isReload) {
             progressBar.setProgress(0);
@@ -1028,7 +959,6 @@ public class Home implements Initializable {
         Task<Void> task = new Task<Void>() {
             @Override public Void call() throws InterruptedException {
                 if (!isReload) updateMessage("Realizando búsqueda de documentos parecidos...");
-                //updateProgress(1, 2);
 
                 dT4TableView.getItems().clear();
 
@@ -1083,7 +1013,6 @@ public class Home implements Initializable {
         thread.start();
     }
 
-    // DONE  ############
     public void dT4Remove(ActionEvent actionEvent) {
         if (dT4TableView.getSelectionModel().getSelectedIndex() != -1) {
             progressBar.setProgress(0);
@@ -1135,7 +1064,6 @@ public class Home implements Initializable {
         }
     }
 
-    // DONE  ############
     public void dT4Show(ActionEvent actionEvent) {
         if (dT4TableView.getSelectionModel().getSelectedIndex() != -1) {
             progressBar.setProgress(0);
@@ -1183,19 +1111,16 @@ public class Home implements Initializable {
         }
     }
 
-    // DONE  ############
     public void dT4DocClear() {
         dT4DocAuthor.clear();
         dT4DocTitle.clear();
         dT4DocContent.clear();
     }
 
-    // DONE  ############
     public void dT4DocClear(ActionEvent actionEvent) {
         dT4DocClear();
     }
 
-    // DONE  ############
     public void dT4Save(ActionEvent actionEvent) {
         if (!dT4DocAuthor.getText().isEmpty() && !dT4DocTitle.getText().isEmpty() && !dT4DocContent.getText().isEmpty()) {
             progressBar.setProgress(0);
@@ -1249,7 +1174,6 @@ public class Home implements Initializable {
         }
     }
 
-    // DONE  ############
     public void dT4Similars(ActionEvent actionEvent) {
         if (!dT4DocAuthor.getText().isEmpty() && !dT4DocTitle.getText().isEmpty() && !dT4DocContent.getText().isEmpty()) {
             dT4Author.setValue(dT4CurrentAuthor);
@@ -1262,12 +1186,10 @@ public class Home implements Initializable {
 
     // aT1
 
-    // DONE  ############
     public void aT1AuthorClear(ActionEvent actionEvent) {
         aT1Author.setValue("");
     }
 
-    // DONE  ############
     public void aT1UpdateAuthorCombo() {
         String current = (String) aT1Author.getValue();
         ObservableList<String> authorComboItems = FXCollections.observableArrayList();
@@ -1276,12 +1198,10 @@ public class Home implements Initializable {
         aT1Author.setValue(current);
     }
 
-    // DONE  ############
     public void aT1Search(ActionEvent actionEvent) {
         aT1LoadAuthorResults(false);
     }
 
-    // DONE  ############
     public void aT1LoadAuthorResults(boolean isReload) {
         if (!isReload) {
             progressBar.setProgress(0);
@@ -1291,11 +1211,8 @@ public class Home implements Initializable {
         Task<Void> task = new Task<Void>() {
             @Override public Void call() throws InterruptedException {
                 if (!isReload) updateMessage("Realizando búsqueda de autores...");
-                //updateProgress(1, 2);
 
                 aT1TableView.getItems().clear();
-
-
 
                 // Si esta puesto el autor => Buscar todos los autores con ese prefijo
                 if (aT1Author.getValue() != null) {
@@ -1351,7 +1268,6 @@ public class Home implements Initializable {
         thread.start();
     }
 
-    // DONE  ############
     public void aT1Remove(ActionEvent actionEvent) {
         if (aT1TableView.getSelectionModel().getSelectedIndex() != -1) {
             progressBar.setProgress(0);
@@ -1364,7 +1280,6 @@ public class Home implements Initializable {
 
                     int itemIndex = aT1TableView.getSelectionModel().getSelectedIndex();
                     String authorName = aT1ResultAuthors.get(itemIndex);
-
 
                     Boolean success = mLibrary.removeAuthor(authorName);
                     // Si se estaba visualizando ese autor => vaciar la vista de documento
@@ -1400,7 +1315,6 @@ public class Home implements Initializable {
         }
     }
 
-    // DONE  ############
     public void aT1Show(ActionEvent actionEvent) {
         if (aT1TableView.getSelectionModel().getSelectedIndex() != -1) {
             progressBar.setProgress(0);
@@ -1441,12 +1355,10 @@ public class Home implements Initializable {
         }
     }
 
-    // DONE  ############
     public void aT1AuthClear(ActionEvent actionEvent) {
         aT1AuthName.clear();
     }
 
-    // DONE  ############
     public void aT1Save(ActionEvent actionEvent) {
         if (!aT1AuthName.getText().isEmpty()) {
             progressBar.setProgress(0);
@@ -1489,10 +1401,6 @@ public class Home implements Initializable {
         } else {
             status.setText("Por favor, edita un autor para poder guardarlo.");
         }
-
-
-
-
     }
 
     public void aT2Add(ActionEvent actionEvent) {

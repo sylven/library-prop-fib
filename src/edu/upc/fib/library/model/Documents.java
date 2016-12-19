@@ -147,7 +147,8 @@ public class Documents implements Serializable {
 
     public void modifyDocumentTitle(Author author, String title, String newTitle) {
         Document document = mDocuments.get(title).get(author);
-        document.setTitle(new Sentence(newTitle));
+        //document.setTitle(new Sentence(newTitle));
+        document.setTitle(newTitle);
 
         // Borrar documento de donde estaba
         mDocuments.get(title).remove(author);

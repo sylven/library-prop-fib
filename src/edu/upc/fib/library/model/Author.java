@@ -5,15 +5,16 @@ import java.io.Serializable;
 import java.util.*;
 
 public class Author implements Comparable<Author>, Serializable {
-    private Sentence mName; // Nombre del autor
+    //private Sentence mName; // Nombre del autor
+    private String mName; // Nombre del autor
     //private String mName;
     //private Vector<Document> mDocuments; // Lista de documentos de los que es autor
     //private Hashtable<String, Document> mDocuments; // Lista de documentos de los que es autor <titulo, Document>
     private TreeMap<String, Document> mDocuments; // Lista de documentos de los que es autor <titulo, Document>
 
     public Author(String name) {
-        mName = new Sentence(name);
-        //mName = name;
+        //mName = new Sentence(name);
+        mName = name;
         //mDocuments = new Vector<>();
         //mDocuments = new Hashtable<>();
         mDocuments = new TreeMap<>();
@@ -22,8 +23,8 @@ public class Author implements Comparable<Author>, Serializable {
     // Gestión del autor
 
     public void modifyName(String newName) {
-        mName = new Sentence(newName);
-        //mName = newName;
+        //mName = new Sentence(newName);
+        mName = newName;
     }
 
     public boolean addDocument(Document document) {
@@ -44,8 +45,8 @@ public class Author implements Comparable<Author>, Serializable {
         return false;
     }
 
-    public Sentence getName() {
-    //public String getName() {
+    //public Sentence getName() {
+    public String getName() {
         return mName;
     }
 

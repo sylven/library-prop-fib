@@ -6,7 +6,8 @@ import java.util.*;
 
 public class Document implements Comparable<Document>, Serializable {
     private Author mAuthor;
-    private Sentence mTitle;
+    //private Sentence mTitle;
+    private String mTitle;
     private Content mContent;
     private Vector<String> mConnectorWords;
 
@@ -16,7 +17,8 @@ public class Document implements Comparable<Document>, Serializable {
 
     public Document(Author author, String title, String content, Vector<String> connectorWords) {
         mAuthor = author;
-        mTitle = new Sentence(title);
+        //mTitle = new Sentence(title);
+        mTitle = title;
         mContent = new Content(content);
         mConnectorWords = connectorWords;
         calculateWordFrequency();
@@ -34,7 +36,8 @@ public class Document implements Comparable<Document>, Serializable {
         mWordsWeight = newWordsWeight;
     }
 
-    public Sentence getTitle() {
+    //public Sentence getTitle() {
+    public String getTitle() {
         return mTitle;
     }
 
@@ -50,7 +53,8 @@ public class Document implements Comparable<Document>, Serializable {
         mAuthor = author;
     }
 
-    public void setTitle(Sentence title) {
+    //public void setTitle(Sentence title) {
+    public void setTitle(String title) {
         mTitle = title;
     }
 
