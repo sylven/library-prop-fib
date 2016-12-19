@@ -14,11 +14,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Font.loadFont(getClass().getResource("/fonts/VarelaRound-Regular.ttf").toExternalForm(), 10);
-        //Parent root = FXMLLoader.load(getClass().getResource("/fxml/home.fxml"));
-
         FXMLLoader fxmlLoader = new FXMLLoader();
-        //Pane p = fxmlLoader.load(getClass().getResource("foo.fxml").openStream());
         Parent root = fxmlLoader.load(getClass().getResource("/fxml/home.fxml").openStream());
         home = fxmlLoader.getController();
 
