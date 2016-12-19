@@ -28,13 +28,11 @@ public class Main extends Application {
         primaryStage.setScene(new Scene(root, 1190, 670));
         primaryStage.setResizable(false);
         primaryStage.show();
-
     }
 
     @Override
     public void stop() {
-
-        home.saveStatus();
+        //home.saveStatus();
     }
 
     public static void main(String[] args) {

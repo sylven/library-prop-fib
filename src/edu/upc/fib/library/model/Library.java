@@ -112,17 +112,17 @@ public class Library implements Serializable {
         return "";
     }
 
-    public List<Pair<String, String>> getSimilarDocuments(String authorName, String title, int nDocuments) {
+    public List<Pair<String, Pair<String, Double>>> getSimilarDocuments(String authorName, String title, int nDocuments) {
         if (existsDocument(authorName, title)) {
             List<Map.Entry<Document, Double>> similarDocuments = mDocuments.getSimilarDocuments(mAuthors.getAuthor(authorName), title);
-            List<Pair<String, String>> resultsList = new ArrayList<>();
+            List<Pair<String, Pair<String, Double>>> resultsList = new ArrayList<>();
             int i = 0;
             for (Map.Entry<Document, Double> result : similarDocuments) {
-                resultsList.add(new Pair(result.getKey().getTitle().toString(), result.getKey().getAuthor().getName().toString()));
-                i++;
                 if (i >= nDocuments) {
                     break;
                 }
+                resultsList.add(new Pair(result.getKey().getTitle().toString(), new Pair<>(result.getKey().getAuthor().getName().toString(), result.getValue())));
+                i++;
             }
              return resultsList;
         }

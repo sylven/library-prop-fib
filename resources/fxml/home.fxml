@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.image.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.scene.control.*?>
 <?import java.lang.*?>
@@ -178,7 +179,7 @@
                                                             </Label>
                                                             <AnchorPane layoutX="14.0" layoutY="180.0" prefHeight="386.0" prefWidth="572.0">
                                                                      <children>
-                                                                        <Pane fx:id="dT3Drag" layoutX="249.0" layoutY="45.0" onDragOver="#dT3DragOver" onDragDropped="#dT3DragDropped" onDragExited="#dT3DragExited" prefHeight="314.0" prefWidth="572.0" style="-fx-background-color: #e0e0e0;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                                        <Pane fx:id="dT3Drag" layoutX="249.0" layoutY="45.0" onDragDropped="#dT3DragDropped" onDragExited="#dT3DragExited" onDragOver="#dT3DragOver" prefHeight="314.0" prefWidth="572.0" style="-fx-background-color: #e0e0e0;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                                            <children>
                                                                               <Label layoutX="217.0" layoutY="185.0" text="Arrastra documentos aquí" />
                                                                            </children>
@@ -237,7 +238,7 @@
                                                                   <Label layoutX="428.0" layoutY="184.0" text="Mostrar" />
                                                                   <TextField fx:id="dT4NResults" layoutX="477.0" layoutY="180.0" prefHeight="25.0" prefWidth="47.0" text="5" />
                                                                   <Label layoutX="530.0" layoutY="184.0" text="resultados" />
-                                                                  <Button fx:id="dT4Search" onAction="#dT4Search" layoutX="14.0" layoutY="180.0" mnemonicParsing="false" text="Buscar" />
+                                                                  <Button fx:id="dT4Search" layoutX="14.0" layoutY="180.0" mnemonicParsing="false" onAction="#dT4Search" text="Buscar" />
                                                                   <Label layoutX="186.0" layoutY="220.0" text="Documentos encontrados">
                                                                      <font>
                                                                         <Font size="20.0" />
@@ -247,19 +248,20 @@
                                                                      <children>
                                                                         <TableView fx:id="dT4TableView" layoutX="214.0" layoutY="61.0" prefHeight="314.0" prefWidth="572.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                                           <columns>
-                                                                            <TableColumn fx:id="dT4TableViewTitle" prefWidth="394.0" text="Título" />
+                                                                            <TableColumn fx:id="dT4TableViewTitle" prefWidth="324.0" text="Título" />
                                                                             <TableColumn fx:id="dT4TableViewAuthor" minWidth="0.0" prefWidth="176.0" text="Autor" />
+                                                                            <TableColumn fx:id="dT4TableViewSimilarity" minWidth="0.0" prefWidth="70.0" text="Similitud" style="-fx-alignment: CENTER-RIGHT;" />
                                                                           </columns>
                                                                         </TableView>
                                                                      </children>
                                                                   </AnchorPane>
-                                                                  <Button fx:id="dT4Remove" onAction="#dT4Remove" layoutX="14.0" layoutY="548.0" mnemonicParsing="false" text="Eliminar documento" />
-                                                                  <Button fx:id="dT4Show" onAction="#dT4Show" layoutX="487.0" layoutY="548.0" mnemonicParsing="false" text="Ver documento" />
+                                                                  <Button fx:id="dT4Remove" layoutX="14.0" layoutY="548.0" mnemonicParsing="false" onAction="#dT4Remove" text="Eliminar documento" />
+                                                                  <Button fx:id="dT4Show" layoutX="487.0" layoutY="548.0" mnemonicParsing="false" onAction="#dT4Show" text="Ver documento" />
                                                                </children>
                                                             </AnchorPane>
                                                             <AnchorPane layoutX="600.0" prefHeight="582.0" prefWidth="600.0" style="-fx-background-color: #e0e0e0;">
                                                               <children>
-                                                                  <Button fx:id="dT4DocClear" onAction="#dT4DocClear" layoutX="562.0" layoutY="14.0" mnemonicParsing="false" text="X" />
+                                                                  <Button fx:id="dT4DocClear" layoutX="562.0" layoutY="14.0" mnemonicParsing="false" onAction="#dT4DocClear" text="X" />
                                                                   <Label layoutX="205.0" layoutY="14.0" text="Visualizar documento">
                                                                      <font>
                                                                         <Font size="20.0" />
@@ -314,7 +316,7 @@
                                                                   <Label layoutX="14.0" layoutY="48.0" text="Introduce el prefijo o nombre de un autor para buscarlo." />
                                                                   <Label layoutX="14.0" layoutY="71.0" text="Autor" />
                                                                   <ComboBox fx:id="aT1Author" editable="true" layoutX="14.0" layoutY="88.0" prefHeight="25.0" prefWidth="572.0" />
-                                                                  <Button fx:id="aT1ClearAuthor" layoutX="539.0" layoutY="88.0" mnemonicParsing="false" onAction="#aT1ClearAuthor" text="X" />
+                                                                  <Button fx:id="aT1AuthorClear" layoutX="539.0" layoutY="88.0" mnemonicParsing="false" onAction="#aT1AuthorClear" text="X" />
                                                                   <Button fx:id="aT1Search" layoutX="14.0" layoutY="121.0" mnemonicParsing="false" onAction="#aT1Search" text="Buscar" />
                                                                   <Label layoutX="208.0" layoutY="146.0" text="Autores encontrados">
                                                                      <font>
@@ -336,14 +338,14 @@
                                                             </AnchorPane>
                                                             <AnchorPane layoutX="600.0" prefHeight="582.0" prefWidth="600.0" style="-fx-background-color: #e0e0e0;">
                                                               <children>
-                                                                  <Button fx:id="aT1AuthorClear" layoutX="562.0" layoutY="14.0" mnemonicParsing="false" onAction="#aT1AuthorClear" text="X" />
+                                                                  <Button fx:id="aT1AuthClear" layoutX="562.0" layoutY="14.0" mnemonicParsing="false" onAction="#aT1AuthClear" text="X" />
                                                                   <Label layoutX="232.0" layoutY="12.0" text="Visualizar autor">
                                                                      <font>
                                                                         <Font size="20.0" />
                                                                      </font>
                                                                   </Label>
                                                                   <Label layoutX="14.0" layoutY="46.0" text="Autor" />
-                                                                  <TextField fx:id="aT1AuthorName" layoutX="14.0" layoutY="63.0" prefHeight="25.0" prefWidth="572.0" />
+                                                                  <TextField fx:id="aT1AuthName" layoutX="14.0" layoutY="63.0" prefHeight="25.0" prefWidth="572.0" />
                                                                   <AnchorPane layoutX="14.0" layoutY="163.0" prefHeight="377.0" prefWidth="572.0" />
                                                                   <Button fx:id="aT1Save" layoutX="14.0" layoutY="548.0" mnemonicParsing="false" onAction="#aT1Save" text="Guardar" />
                                                                </children>
@@ -379,7 +381,7 @@
                                                                </font>
                                                             </Label>
                                                             <Label layoutX="14.0" layoutY="46.0" text="Autor" />
-                                                            <TextField fx:id="aT2AuthorName" layoutX="14.0" layoutY="63.0" prefHeight="25.0" prefWidth="572.0" />
+                                                            <TextField fx:id="aT2AuthName" layoutX="14.0" layoutY="63.0" prefHeight="25.0" prefWidth="572.0" />
                                                             <AnchorPane layoutX="14.0" layoutY="163.0" prefHeight="377.0" prefWidth="572.0" />
                                                             <Button fx:id="aT2Add" layoutX="14.0" layoutY="548.0" mnemonicParsing="false" onAction="#aT2Add" text="Añadir autor" />
                                                          </children>
@@ -408,14 +410,27 @@
                         </Tab>
                         <Tab text="Acerca de">
                           <content>
-                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                 <children>
+                                    <Label layoutX="551.0" layoutY="185.0" text="Library v1.0">
+                                       <font>
+                                          <Font size="20.0" />
+                                       </font>
+                                    </Label>
+                                    <Label layoutX="497.0" layoutY="217.0" text="Programa para gestión de documentos." />
+                                    <Label layoutX="441.0" layoutY="284.0" text="Realizado por Silviu Chirvasa, Javier Gimenez y Pau Carbonell." />
+                                 </children></AnchorPane>
                           </content>
                         </Tab>
                     </tabs>
                   </TabPane>
                </children>
             </AnchorPane>
-            <AnchorPane prefHeight="40.0" prefWidth="1200.0" style="-fx-background-color: #c4c4c4;" />
+            <AnchorPane prefHeight="40.0" prefWidth="1200.0" style="-fx-background-color: #c4c4c4;">
+               <children>
+                  <Label fx:id="status" layoutX="14.0" layoutY="12.0" text="" />
+                  <ProgressBar fx:id="progressBar" layoutX="986.0" layoutY="11.0" prefWidth="200.0" progress="1.0" visible="false" />
+               </children></AnchorPane>
          </children>
       </VBox>
    </children>

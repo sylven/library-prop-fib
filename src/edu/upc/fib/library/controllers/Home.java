@@ -5,6 +5,8 @@ import edu.upc.fib.library.model.Library;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -15,16 +17,15 @@ import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Pair;
-import javafx.event.ActionEvent;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.net.URL;
-import java.util.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.ResourceBundle;
 
 public class Home implements Initializable {
     private Library mLibrary;
@@ -64,7 +65,8 @@ public class Home implements Initializable {
     @FXML private TableView<Integer> dT4TableView;
     @FXML private TableColumn<Integer, String> dT4TableViewTitle;
     @FXML private TableColumn<Integer, String> dT4TableViewAuthor;
-    private List<Pair<String, String>> dT4ResultDocuments;
+    @FXML private TableColumn<Integer, String> dT4TableViewSimilarity;
+    private List<Pair<String, Pair<String, Double>>> dT4ResultDocuments;
     @FXML private TextField dT4DocAuthor;
     @FXML private TextField dT4DocTitle;
     @FXML private TextArea dT4DocContent;
@@ -76,18 +78,19 @@ public class Home implements Initializable {
     @FXML private TableView<Integer> aT1TableView;
     @FXML private TableColumn<Integer, String> aT1TableViewAuthor;
     private List<String> aT1ResultAuthors;
-    @FXML private TextField aT1AuthorName;
+    @FXML private TextField aT1AuthName;
     private String aT1CurrentAuthor;
 
-    @FXML private TextField aT2AuthorName;
+    @FXML private TextField aT2AuthName;
 
-
-
-
-    //@FXML private TextField viewDocAutor;
+    @FXML private Label status;
+    @FXML private ProgressBar progressBar;
 
     public Home() {
         mLibrary = new Library();
+        mLibrary.addDocument("a", "a", "aaa coche");
+        mLibrary.addDocument("b", "b", "aaa cosa");
+        mLibrary.addDocument("c", "c", "cosa coche");
 
 //        String content;
 //        content = "Donald John Trump (Nueva York, 14 de junio de 1946) es un empresario, político, personalidad televisiva y escritor estadounidense.\n\nSiendo el presidente electo de los Estados Unidos de América; se convertirá en el 45° presidente de la Unión tras su toma de posesión, programada para el 20 de enero de 2017. Es presidente de la Trump Organization y fundador de la empresa de hotel y juegos de azar Trump Entertainment Resorts, que es ahora propiedad de Carl Icahn. Trump es una celebridad televisiva, y entre otras cosas fue el presentador del reality show The Apprentice, de la NBC, entre 2004 y 2015. Es hijo de un empresario inmobiliario de Nueva York,4 en cuya compañía, Elizabeth Trump & Son, trabajó mientras estudiaba en la Escuela de Negocios Wharton de la Universidad de Pensilvania. En 1968, se unió oficialmente a esa sociedad,5 que controla desde 1971, cuando la renombró Trump Organization. En los años 1990 la empresa entró en bancarrota comercial, pero en la década siguiente se recuperó, lo que le reportó una fortuna de varios miles de millones de dólares. Su campaña para obtener la candidatura republicana a la Casa Blanca para las elecciones de 2016 se vio caracterizada desde su inicio por una gran atención mediática a nivel nacional e internacional debido a la sucesión de declaraciones polémicas por parte de Trump. Sus propuestas más repetidas consisten en la construcción de un muro a lo largo de la frontera con México y una política dura contra la inmigración ilegal, además de una prohibición temporal de la entrada de musulmanes en los Estados Unidos. En lo económico, aboga por modificar la política comercial del país y fortalecer la producción nacional en detrimento de la deslocalización, en consonancia con posiciones proteccionistas.";
@@ -107,21 +110,6 @@ public class Home implements Initializable {
 
         //mLibrary.removeAuthor("Wikipediaa");
     }
-
-    /*public void loadInitialValues() {
-        //List<Pair<String, String>> documentInfos = mLibrary.getAllDocuments();
-        ObservableList<String> names = FXCollections.observableArrayList(
-                "Julia", "Ian", "Sue", "Matthew", "Hannah", "Stephan", "Denise");
-        listView1.setItems(FXCollections.observableList(names));
-        //listView1.setItems(names);
-
-        ObservableList<String> items = listView1.getItems();
-        items.add("One");
-        items.add("Two");
-        items.add("Three");
-        items.add("Four");
-        items.add("Five");
-    }*/
 
     public void saveStatus() {
         mLibrary.saveStatus();
@@ -148,360 +136,703 @@ public class Home implements Initializable {
         ObservableList<String> aT1AuthorComboItems = FXCollections.observableArrayList();
         aT1Author.setItems(aT1AuthorComboItems);
         aT1AuthorComboItems.addAll(mLibrary.getAuthorNames());
+
         // Llenar las listas de resultados
-        dT1LoadDocumentResults();
-        aT1LoadAuthorResults();
+        dT1LoadDocumentResults(false);
+        aT1LoadAuthorResults(true);
     }
 
-    // Update other views when a delete or modification is done
+    public void updateCombos() {
+        dT1UpdateAuthorCombo();
+        dT1UpdateTitleCombo();
+        dT4UpdateAuthorCombo();
+        dT4UpdateTitleCombo();
+        aT1UpdateAuthorCombo();
+    }
+
 
     // dT1
 
+    // DONE ############
     public void dT1AuthorClear(ActionEvent actionEvent) {
         dT1Author.setValue("");
     }
 
+    // DONE ############
     public void dT1UpdateAuthorCombo() {
-        String dT1AuthorCurrent = (String) dT1Author.getValue();
+        String current = (String) dT1Author.getValue();
         ObservableList<String> authorComboItems = FXCollections.observableArrayList();
         dT1Author.setItems(authorComboItems);
         authorComboItems.addAll(mLibrary.getAuthorNames());
-        dT1Author.setValue(dT1AuthorCurrent);
+        dT1Author.setValue(current);
     }
 
+    // DONE ############
     @FXML
     public void dT1TitleClear(ActionEvent actionEvent) {
         dT1Title.setValue("");
     }
 
+    // DONE ############
     @FXML
     private void dT1UpdateTitleCombo() {
-        String dT1TitleCurrent = (String) dT1Title.getValue();
+        String current = (String) dT1Title.getValue();
         ObservableList<String> titleComboItems = FXCollections.observableArrayList();
         dT1Title.setItems(titleComboItems);
         titleComboItems.addAll(mLibrary.getDocumentTitles());
-        dT1Title.setValue(dT1TitleCurrent);
+        dT1Title.setValue(current);
     }
 
+    // DONE ############
     public void dT1Search(ActionEvent actionEvent) {
-        dT1LoadDocumentResults();
+        dT1LoadDocumentResults(false);
     }
 
-    public void dT1LoadDocumentResults() {
-        //if (documentsTab.getSelectionModel().getSelectedIndex() == 0) {
-            //int selectedItem = dT1TableView.getSelectionModel().getSelectedIndex();
-            //ObservableList<Pair<String, String>> listView1items = dT1TableView.getItems();
-            //listView1items.clear();
-
-        // Clear table elements
-        //dT1TableView.getColumns().clear();
-        dT1TableView.getItems().clear();
-
-        // Si solo esta puesto el autor => Buscar todos los autores con ese prefijo => Mostrar los documentos de todos ellos
-        if (dT1Title.getValue() == null && dT1Author.getValue() != null) {
-            String author = dT1Author.getValue().toString();
-            dT1ResultDocuments = mLibrary.getDocumentsByPrefixes(author, null);
-            for(int i = 0; i < dT1ResultDocuments.size(); i++){
-                dT1TableView.getItems().add(i);
-            }
-            dT1TableViewTitle.setCellValueFactory(cellData -> {
-                Integer titleIndex = cellData.getValue();
-                return new ReadOnlyStringWrapper(dT1ResultDocuments.get(titleIndex).getKey());
-            });
-            dT1TableViewAuthor.setCellValueFactory(cellData -> {
-                Integer titleIndex = cellData.getValue();
-                return new ReadOnlyStringWrapper(dT1ResultDocuments.get(titleIndex).getValue());
-            });
+    // DONE ############
+    public void dT1LoadDocumentResults(boolean isReload) {
+        if (!isReload) {
+            progressBar.setProgress(0);
+            progressBar.setVisible(true);
         }
-        // Si solo esta puesto el titulo => Mostrar todos los documentos con ese prefijo
-        else if (dT1Title.getValue() != null && dT1Author.getValue() == null) {
-            String title = dT1Title.getValue().toString();
-            dT1ResultDocuments = mLibrary.getDocumentsByPrefixes(null, title);
-            for(int i = 0; i < dT1ResultDocuments.size(); i++){
-                dT1TableView.getItems().add(i);
-            }
-            dT1TableViewTitle.setCellValueFactory(cellData -> {
-                Integer titleIndex = cellData.getValue();
-                return new ReadOnlyStringWrapper(dT1ResultDocuments.get(titleIndex).getKey());
-            });
-            dT1TableViewAuthor.setCellValueFactory(cellData -> {
-                Integer titleIndex = cellData.getValue();
-                return new ReadOnlyStringWrapper(dT1ResultDocuments.get(titleIndex).getValue());
-            });
-        }
-        // Si esta puesto el titulo y el autor => Buscar todos los autores con ese prefijo y mostrar su documentos con ese prefijo
-        else if (dT1Title.getValue() != null && dT1Author.getValue() != null) {
-            String author = dT1Author.getValue().toString();
-            String title = dT1Title.getValue().toString();
-            dT1ResultDocuments = mLibrary.getDocumentsByPrefixes(author, title);
-            for(int i = 0; i < dT1ResultDocuments.size(); i++){
-                dT1TableView.getItems().add(i);
-            }
-            dT1TableViewTitle.setCellValueFactory(cellData -> {
-                Integer titleIndex = cellData.getValue();
-                return new ReadOnlyStringWrapper(dT1ResultDocuments.get(titleIndex).getKey());
-            });
-            dT1TableViewAuthor.setCellValueFactory(cellData -> {
-                Integer titleIndex = cellData.getValue();
-                return new ReadOnlyStringWrapper(dT1ResultDocuments.get(titleIndex).getValue());
-            });
-        }
-        // Si no esta puesto ninguno => Mostrar todos los documentos
-        else if (dT1Title.getValue() == null && dT1Author.getValue() == null) {
-            dT1ResultDocuments = mLibrary.getDocumentsByPrefixes(null, null);
-            for(int i = 0; i < dT1ResultDocuments.size(); i++){
-                dT1TableView.getItems().add(i);
-            }
-            //TableColumn<Integer, String> dT1TableViewTitle = new TableColumn<>("Título");
-            //dT1TableViewTitle.setPrefWidth(394);
-            dT1TableViewTitle.setCellValueFactory(cellData -> {
-                Integer titleIndex = cellData.getValue();
-                return new ReadOnlyStringWrapper(dT1ResultDocuments.get(titleIndex).getKey());
-            });
-            //TableColumn<Integer, String> dT1TableViewAuthor = new TableColumn<>("Autor");
-            //dT1TableViewTitle.setPrefWidth(176);
-            dT1TableViewAuthor.setCellValueFactory(cellData -> {
-                Integer titleIndex = cellData.getValue();
-                return new ReadOnlyStringWrapper(dT1ResultDocuments.get(titleIndex).getValue());
-            });
-            //dT1TableView.getColumns().addAll(dT1TableViewTitle, dT1TableViewAuthor);
-        }
-        //dT1TableView.getSelectionModel().select(selectedItem);
 
+        Task<Void> task = new Task<Void>() {
+            @Override public Void call() throws InterruptedException {
+                if (!isReload) updateMessage("Realizando búsqueda de documentos...");
+                //updateProgress(1, 2);
 
-        //} else if (documentsTab.getSelectionModel().getSelectedIndex() == 1) {
+                dT1TableView.getItems().clear();
 
-        //}
+                //status.setText("Realizando búsqueda de documentos...");
+
+                // Si solo esta puesto el autor => Buscar todos los autores con ese prefijo => Mostrar los documentos de todos ellos
+                if (dT1Title.getValue() == null && dT1Author.getValue() != null) {
+                    String author = dT1Author.getValue().toString();
+                    dT1ResultDocuments = mLibrary.getDocumentsByPrefixes(author, null);
+                    for(int i = 0; i < dT1ResultDocuments.size(); i++){
+                        dT1TableView.getItems().add(i);
+                    }
+                    dT1TableViewTitle.setCellValueFactory(cellData -> {
+                        Integer titleIndex = cellData.getValue();
+                        return new ReadOnlyStringWrapper(dT1ResultDocuments.get(titleIndex).getKey());
+                    });
+                    dT1TableViewAuthor.setCellValueFactory(cellData -> {
+                        Integer titleIndex = cellData.getValue();
+                        return new ReadOnlyStringWrapper(dT1ResultDocuments.get(titleIndex).getValue());
+                    });
+                    //status.setText("Búsqueda finalizada.");
+                    if (!isReload) updateMessage("Búsqueda finalizada.");
+                }
+                // Si solo esta puesto el titulo => Mostrar todos los documentos con ese prefijo
+                else if (dT1Title.getValue() != null && dT1Author.getValue() == null) {
+                    String title = dT1Title.getValue().toString();
+                    dT1ResultDocuments = mLibrary.getDocumentsByPrefixes(null, title);
+                    for(int i = 0; i < dT1ResultDocuments.size(); i++){
+                        dT1TableView.getItems().add(i);
+                    }
+                    dT1TableViewTitle.setCellValueFactory(cellData -> {
+                        Integer titleIndex = cellData.getValue();
+                        return new ReadOnlyStringWrapper(dT1ResultDocuments.get(titleIndex).getKey());
+                    });
+                    dT1TableViewAuthor.setCellValueFactory(cellData -> {
+                        Integer titleIndex = cellData.getValue();
+                        return new ReadOnlyStringWrapper(dT1ResultDocuments.get(titleIndex).getValue());
+                    });
+                    //status.setText("Búsqueda finalizada.");
+                    if (!isReload) updateMessage("Búsqueda finalizada.");
+                }
+                // Si esta puesto el titulo y el autor => Buscar todos los autores con ese prefijo y mostrar su documentos con ese prefijo
+                else if (dT1Title.getValue() != null && dT1Author.getValue() != null) {
+                    String author = dT1Author.getValue().toString();
+                    String title = dT1Title.getValue().toString();
+                    dT1ResultDocuments = mLibrary.getDocumentsByPrefixes(author, title);
+                    for(int i = 0; i < dT1ResultDocuments.size(); i++){
+                        dT1TableView.getItems().add(i);
+                    }
+                    dT1TableViewTitle.setCellValueFactory(cellData -> {
+                        Integer titleIndex = cellData.getValue();
+                        return new ReadOnlyStringWrapper(dT1ResultDocuments.get(titleIndex).getKey());
+                    });
+                    dT1TableViewAuthor.setCellValueFactory(cellData -> {
+                        Integer titleIndex = cellData.getValue();
+                        return new ReadOnlyStringWrapper(dT1ResultDocuments.get(titleIndex).getValue());
+                    });
+                    //status.setText("Búsqueda finalizada.");
+                    if (!isReload) updateMessage("Búsqueda finalizada.");
+                }
+                // Si no esta puesto ninguno => Mostrar todos los documentos
+                else if (dT1Title.getValue() == null && dT1Author.getValue() == null) {
+                    dT1ResultDocuments = mLibrary.getDocumentsByPrefixes(null, null);
+                    for(int i = 0; i < dT1ResultDocuments.size(); i++){
+                        dT1TableView.getItems().add(i);
+                    }
+                    //TableColumn<Integer, String> dT1TableViewTitle = new TableColumn<>("Título");
+                    //dT1TableViewTitle.setPrefWidth(394);
+                    dT1TableViewTitle.setCellValueFactory(cellData -> {
+                        Integer titleIndex = cellData.getValue();
+                        return new ReadOnlyStringWrapper(dT1ResultDocuments.get(titleIndex).getKey());
+                    });
+                    //TableColumn<Integer, String> dT1TableViewAuthor = new TableColumn<>("Autor");
+                    //dT1TableViewTitle.setPrefWidth(176);
+                    dT1TableViewAuthor.setCellValueFactory(cellData -> {
+                        Integer titleIndex = cellData.getValue();
+                        return new ReadOnlyStringWrapper(dT1ResultDocuments.get(titleIndex).getValue());
+                    });
+                    //status.setText("Carga de lista completa de documentos finalizada (campos de búsqueda vacíos).");
+                    if (!isReload) updateMessage("Se muestra la lista completa de documentos.");
+                    //dT1TableView.getColumns().addAll(dT1TableViewTitle, dT1TableViewAuthor);
+                }
+
+                //updateMessage("Datos del programa guardados satisfactoriamente.");
+                //updateProgress(2, 2);
+
+                return null;
+            }
+        };
+
+        task.setOnSucceeded(event -> {
+            if (!isReload) {
+                progressBar.progressProperty().unbind();
+                progressBar.setVisible(false);
+                status.textProperty().unbind();
+            }
+            //status.textProperty().unbind();
+            //status.setText("Documento añadido satisfactoriamente.");
+        });
+
+        if (!isReload) {
+            status.textProperty().bind(task.messageProperty());
+            progressBar.progressProperty().bind(task.progressProperty());
+        }
+
+        Thread thread = new Thread(task);
+        thread.setDaemon(true);
+        thread.start();
     }
 
+    // DONE ############
     public void dT1Remove(ActionEvent actionEvent) {
-        int itemIndex = dT1TableView.getSelectionModel().getSelectedIndex();
-        String documentTitle = dT1ResultDocuments.get(itemIndex).getKey();
-        String authorName = dT1ResultDocuments.get(itemIndex).getValue();
-        mLibrary.removeDocument(authorName, documentTitle);
+        if (dT1TableView.getSelectionModel().getSelectedIndex() != -1) {
+            progressBar.setProgress(0);
+            progressBar.setVisible(true);
 
-        // Si se estaba visualizando ese documento => vaciar la vista de documento
-        if (authorName.equals(dT1DocAuthor.getText()) && documentTitle.equals(dT1DocTitle.getText())) {
-            dT1DocAuthor.clear();
-            dT1DocTitle.clear();
-            dT1DocContent.clear();
+            Task<Boolean> task = new Task<Boolean>() {
+                @Override public Boolean call() throws InterruptedException {
+                    updateMessage("Eliminando documento...");
+
+                    int itemIndex = dT1TableView.getSelectionModel().getSelectedIndex();
+                    String documentTitle = dT1ResultDocuments.get(itemIndex).getKey();
+                    String authorName = dT1ResultDocuments.get(itemIndex).getValue();
+
+                    Boolean success = mLibrary.removeDocument(authorName, documentTitle);
+                    // Si se estaba visualizando ese documento => vaciar la vista de documento
+                    if (authorName.equals(dT1DocAuthor.getText()) && documentTitle.equals(dT1DocTitle.getText())) {
+                        dT1DocAuthor.clear();
+                        dT1DocTitle.clear();
+                        dT1DocContent.clear();
+                    }
+                    return success;
+                }
+            };
+
+            task.setOnSucceeded(event -> {
+                progressBar.progressProperty().unbind();
+                progressBar.setVisible(false);
+                status.textProperty().unbind();
+
+                if (task.getValue()) status.setText("Documento eliminado satisfactoriamente.");
+                else status.setText("El documento no existe.");
+
+                // Actualizar lista de resultados
+                updateCombos();
+                dT1LoadDocumentResults(true);
+            });
+
+            status.textProperty().bind(task.messageProperty());
+            progressBar.progressProperty().bind(task.progressProperty());
+
+            Thread thread = new Thread(task);
+            thread.setDaemon(true);
+            thread.start();
+        } else {
+            status.setText("Por favor, selecciona un documento para poder eliminarlo.");
         }
-
-        // Actualizar lista de resultados
-        dT1LoadDocumentResults();
-        dT1UpdateTitleCombo();
-        dT2LoadDocumentResults();
     }
 
+    // DONE ############
     public void dT1Show(ActionEvent actionEvent) {
-        int itemIndex = dT1TableView.getSelectionModel().getSelectedIndex();
-        dT1CurrentTitle = dT1ResultDocuments.get(itemIndex).getKey();
-        dT1CurrentAuthor = dT1ResultDocuments.get(itemIndex).getValue();
-        dT1CurrentContent = mLibrary.getDocumentContent(dT1CurrentAuthor, dT1CurrentTitle);
+        if (dT1TableView.getSelectionModel().getSelectedIndex() != -1) {
+            progressBar.setProgress(0);
+            progressBar.setVisible(true);
 
-        dT1DocTitle.setText(dT1CurrentTitle);
-        dT1DocAuthor.setText(dT1CurrentAuthor);
-        dT1DocContent.setText(dT1CurrentContent);
+            Task<Boolean> task = new Task<Boolean>() {
+                @Override
+                public Boolean call() throws InterruptedException {
+                    updateMessage("Abriendo documento...");
 
-        //dT1TableView.requestFocus();
+                    int itemIndex = dT1TableView.getSelectionModel().getSelectedIndex();
+                    dT1CurrentTitle = dT1ResultDocuments.get(itemIndex).getKey();
+                    dT1CurrentAuthor = dT1ResultDocuments.get(itemIndex).getValue();
 
-        // Actualizar lista de resultados
-        //dT1LoadDocumentResults();
+                    Boolean success = false;
+                    String content = mLibrary.getDocumentContent(dT1CurrentAuthor, dT1CurrentTitle);
+                    if (content != null) {
+                        success = true;
+                        dT1CurrentContent = content;
+                        dT1DocTitle.setText(dT1CurrentTitle);
+                        dT1DocAuthor.setText(dT1CurrentAuthor);
+                        dT1DocContent.setText(dT1CurrentContent);
+                    }
+                    return success;
+                }
+            };
+
+            task.setOnSucceeded(event -> {
+                progressBar.progressProperty().unbind();
+                progressBar.setVisible(false);
+                status.textProperty().unbind();
+
+                if (task.getValue()) status.setText("Documento abierto satisfactoriamente.");
+                else status.setText("El documento no existe.");
+            });
+
+            status.textProperty().bind(task.messageProperty());
+            progressBar.progressProperty().bind(task.progressProperty());
+
+            Thread thread = new Thread(task);
+            thread.setDaemon(true);
+            thread.start();
+        } else {
+            status.setText("Por favor, selecciona un documento para poder verlo.");
+        }
     }
 
+    // DONE  ############
     public void dT1DocClear(ActionEvent actionEvent) {
         dT1DocAuthor.clear();
         dT1DocTitle.clear();
         dT1DocContent.clear();
     }
 
+    // DONE  ############
     public void dT1Save(ActionEvent actionEvent) {
-        if (!dT1DocAuthor.getText().equals(dT1CurrentAuthor)) {
-            mLibrary.modifyDocumentAuthor(dT1CurrentAuthor, dT1CurrentTitle, dT1DocAuthor.getText());
-            dT1CurrentAuthor = dT1DocAuthor.getText();
-            dT1UpdateAuthorCombo();
+        if (!dT1DocAuthor.getText().isEmpty() && !dT1DocTitle.getText().isEmpty() && !dT1DocContent.getText().isEmpty()) {
+            progressBar.setProgress(0);
+            progressBar.setVisible(true);
+
+            Task<Boolean> task = new Task<Boolean>() {
+                @Override
+                public Boolean call() throws InterruptedException {
+                    updateMessage("Guardando documento...");
+
+                    if (!dT1DocAuthor.getText().equals(dT1CurrentAuthor)) {
+                        mLibrary.modifyDocumentAuthor(dT1CurrentAuthor, dT1CurrentTitle, dT1DocAuthor.getText());
+                        dT1CurrentAuthor = dT1DocAuthor.getText();
+                    }
+                    if (!dT1DocTitle.getText().equals(dT1CurrentTitle)) {
+                        mLibrary.modifyDocumentTitle(dT1CurrentAuthor, dT1CurrentTitle, dT1DocTitle.getText());
+                        dT1CurrentTitle = dT1DocTitle.getText();
+                    }
+                    if (!dT1DocContent.getText().equals(dT1CurrentContent)) {
+                        mLibrary.modifyDocumentContent(dT1CurrentAuthor, dT1CurrentTitle, dT1DocContent.getText());
+                        dT1CurrentContent = dT1DocContent.getText();
+                    }
+
+                    return true;
+                }
+            };
+
+            task.setOnSucceeded(event -> {
+                progressBar.progressProperty().unbind();
+                progressBar.setVisible(false);
+                status.textProperty().unbind();
+
+                if (task.getValue()) status.setText("Documento guardado satisfactoriamente.");
+                else status.setText("El documento no se ha podido guardar.");
+
+                // Actualizar lista de resultados
+                updateCombos();
+                dT1LoadDocumentResults(true);
+            });
+
+            status.textProperty().bind(task.messageProperty());
+            progressBar.progressProperty().bind(task.progressProperty());
+
+            Thread thread = new Thread(task);
+            thread.setDaemon(true);
+            thread.start();
+        } else {
+            status.setText("Por favor, edita un documento para poder guardarlo.");
         }
-        if (!dT1DocTitle.getText().equals(dT1CurrentTitle)) {
-            mLibrary.modifyDocumentTitle(dT1CurrentAuthor, dT1CurrentTitle, dT1DocTitle.getText());
-            dT1CurrentTitle = dT1DocTitle.getText();
-            dT1UpdateTitleCombo();
-        }
-        if (!dT1DocContent.getText().equals(dT1CurrentContent)) {
-            mLibrary.modifyDocumentContent(dT1CurrentAuthor, dT1CurrentTitle, dT1DocContent.getText());
-        }
-        dT1LoadDocumentResults();
-        dT2LoadDocumentResults();
     }
 
+    // DONE  ############
     public void dT1Similars(ActionEvent actionEvent) {
-        dT4Author.setValue(dT1CurrentAuthor);
-        dT4Title.setValue(dT1CurrentTitle);
-        dT4DocClear();
-        dT4LoadDocumentResults();
-        documentsTab.getSelectionModel().select(3);
+        if (!dT1DocAuthor.getText().isEmpty() && !dT1DocTitle.getText().isEmpty() && !dT1DocContent.getText().isEmpty()) {
+            dT4Author.setValue(dT1CurrentAuthor);
+            dT4Title.setValue(dT1CurrentTitle);
+            dT4DocClear();
+            dT4LoadDocumentResults(false);
+            documentsTab.getSelectionModel().select(3);
+        } else {
+            status.setText("Por favor, visualiza un documento para poder buscar parecidos.");
+        }
     }
+
 
     // dT2
 
+    // DONE  ############
     public void dT2ExpressionClear(ActionEvent actionEvent) {
         dT2Expression.clear();
     }
 
+    // DONE  ############
     public void dT2Search(ActionEvent actionEvent) {
-        dT2LoadDocumentResults();
+        dT2LoadDocumentResults(false);
     }
 
-    public void dT2LoadDocumentResults() {
-        // Clear table elements
-        dT2TableView.getItems().clear();
+    // DONE  ############
+    public void dT2LoadDocumentResults(boolean isReload) {
+        if (!isReload) {
+            progressBar.setProgress(0);
+            progressBar.setVisible(true);
+        }
 
-        // Si solo esta puesto el autor => Buscar todos los autores con ese prefijo => Mostrar los documentos de todos ellos
-        if (!dT2Expression.getText().equals("")) {
-            String expression = dT2Expression.getText();
-            dT2ResultDocuments = mLibrary.getBooleanDocuments(expression);
-            for(int i = 0; i < dT2ResultDocuments.size(); i++){
-                dT2TableView.getItems().add(i);
+        Task<Void> task = new Task<Void>() {
+            @Override public Void call() throws InterruptedException {
+                if (!isReload) updateMessage("Realizando búsqueda de documentos...");
+                //updateProgress(1, 2);
+
+                dT2TableView.getItems().clear();
+
+                //status.setText("Realizando búsqueda de documentos...");
+
+                // Si solo esta puesto el autor => Buscar todos los autores con ese prefijo => Mostrar los documentos de todos ellos
+                if (dT2Expression.getText().equals("")) {
+                    if (!isReload) updateMessage("Debes introducir una expresión para realizar la búsqueda.");
+                } else {
+                    String expression = dT2Expression.getText();
+                    dT2ResultDocuments = mLibrary.getBooleanDocuments(expression);
+                    if (dT2ResultDocuments.size() == 0) {
+                        if (!isReload) updateMessage("No se han encontrado resultados.");
+                    } else {
+                        if (!isReload) updateMessage("Búsqueda finalizada.");
+                        for(int i = 0; i < dT2ResultDocuments.size(); i++){
+                            dT2TableView.getItems().add(i);
+                        }
+                        dT2TableViewTitle.setCellValueFactory(cellData -> {
+                            Integer titleIndex = cellData.getValue();
+                            return new ReadOnlyStringWrapper(dT2ResultDocuments.get(titleIndex).getKey());
+                        });
+                        dT2TableViewAuthor.setCellValueFactory(cellData -> {
+                            Integer titleIndex = cellData.getValue();
+                            return new ReadOnlyStringWrapper(dT2ResultDocuments.get(titleIndex).getValue());
+                        });
+                    }
+                }
+                return null;
             }
-            dT2TableViewTitle.setCellValueFactory(cellData -> {
-                Integer titleIndex = cellData.getValue();
-                return new ReadOnlyStringWrapper(dT2ResultDocuments.get(titleIndex).getKey());
-            });
-            dT2TableViewAuthor.setCellValueFactory(cellData -> {
-                Integer titleIndex = cellData.getValue();
-                return new ReadOnlyStringWrapper(dT2ResultDocuments.get(titleIndex).getValue());
-            });
-        }
-        // Si no esta puesto => Mostrar todos los documentos
-        else if (dT2Expression.getText().equals("")) {
-            dT2ResultDocuments = mLibrary.getAllDocuments();
-            for(int i = 0; i < dT2ResultDocuments.size(); i++){
-                dT2TableView.getItems().add(i);
+        };
+
+        task.setOnSucceeded(event -> {
+            if (!isReload) {
+                progressBar.progressProperty().unbind();
+                progressBar.setVisible(false);
+                status.textProperty().unbind();
             }
-            dT2TableViewTitle.setCellValueFactory(cellData -> {
-                Integer titleIndex = cellData.getValue();
-                return new ReadOnlyStringWrapper(dT2ResultDocuments.get(titleIndex).getKey());
-            });
-            dT2TableViewAuthor.setCellValueFactory(cellData -> {
-                Integer titleIndex = cellData.getValue();
-                return new ReadOnlyStringWrapper(dT2ResultDocuments.get(titleIndex).getValue());
-            });
+        });
+
+        if (!isReload) {
+            status.textProperty().bind(task.messageProperty());
+            progressBar.progressProperty().bind(task.progressProperty());
         }
+
+        Thread thread = new Thread(task);
+        thread.setDaemon(true);
+        thread.start();
     }
 
+    // DONE  ############
     public void dT2Remove(ActionEvent actionEvent) {
-        int itemIndex = dT2TableView.getSelectionModel().getSelectedIndex();
-        String documentTitle = dT2ResultDocuments.get(itemIndex).getKey();
-        String authorName = dT2ResultDocuments.get(itemIndex).getValue();
-        mLibrary.removeDocument(authorName, documentTitle);
+        if (dT2TableView.getSelectionModel().getSelectedIndex() != -1) {
+            progressBar.setProgress(0);
+            progressBar.setVisible(true);
 
-        // Si se estaba visualizando ese documento => vaciar la vista de documento
-        if (authorName.equals(dT2DocAuthor.getText()) && documentTitle.equals(dT2DocTitle.getText())) {
-            dT2DocAuthor.clear();
-            dT2DocTitle.clear();
-            dT2DocContent.clear();
+            Task<Boolean> task = new Task<Boolean>() {
+                @Override
+                public Boolean call() throws InterruptedException {
+                    updateMessage("Eliminando documento...");
+
+                    int itemIndex = dT2TableView.getSelectionModel().getSelectedIndex();
+                    String documentTitle = dT2ResultDocuments.get(itemIndex).getKey();
+                    String authorName = dT2ResultDocuments.get(itemIndex).getValue();
+
+                    Boolean success = mLibrary.removeDocument(authorName, documentTitle);
+                    // Si se estaba visualizando ese documento => vaciar la vista de documento
+                    if (authorName.equals(dT2DocAuthor.getText()) && documentTitle.equals(dT2DocTitle.getText())) {
+                        dT2DocAuthor.clear();
+                        dT2DocTitle.clear();
+                        dT2DocContent.clear();
+                    }
+                    return success;
+                }
+            };
+
+            task.setOnSucceeded(event -> {
+                progressBar.progressProperty().unbind();
+                progressBar.setVisible(false);
+                status.textProperty().unbind();
+
+                if (task.getValue()) status.setText("Documento eliminado satisfactoriamente.");
+                else status.setText("El documento no existe.");
+
+                // Actualizar lista de resultados
+                updateCombos();
+                dT1LoadDocumentResults(true);
+                dT2LoadDocumentResults(true);
+            });
+
+            status.textProperty().bind(task.messageProperty());
+            progressBar.progressProperty().bind(task.progressProperty());
+
+            Thread thread = new Thread(task);
+            thread.setDaemon(true);
+            thread.start();
+        } else {
+            status.setText("Por favor, selecciona un documento para poder eliminarlo.");
         }
-
-        // Actualizar lista de resultados
-        dT1LoadDocumentResults();
-        dT1UpdateTitleCombo();
-        dT2LoadDocumentResults();
     }
 
+    // DONE  ############
     public void dT2Show(ActionEvent actionEvent) {
-        int itemIndex = dT2TableView.getSelectionModel().getSelectedIndex();
-        dT2CurrentTitle = dT2ResultDocuments.get(itemIndex).getKey();
-        dT2CurrentAuthor = dT2ResultDocuments.get(itemIndex).getValue();
-        dT2CurrentContent = mLibrary.getDocumentContent(dT2CurrentAuthor, dT2CurrentTitle);
+        if (dT2TableView.getSelectionModel().getSelectedIndex() != -1) {
+            progressBar.setProgress(0);
+            progressBar.setVisible(true);
 
-        dT2DocTitle.setText(dT2CurrentTitle);
-        dT2DocAuthor.setText(dT2CurrentAuthor);
-        dT2DocContent.setText(dT2CurrentContent);
+            Task<Boolean> task = new Task<Boolean>() {
+                @Override
+                public Boolean call() throws InterruptedException {
+                    updateMessage("Abriendo documento...");
+
+                    int itemIndex = dT2TableView.getSelectionModel().getSelectedIndex();
+                    dT2CurrentTitle = dT2ResultDocuments.get(itemIndex).getKey();
+                    dT2CurrentAuthor = dT2ResultDocuments.get(itemIndex).getValue();
+
+                    Boolean success = false;
+                    String content = mLibrary.getDocumentContent(dT2CurrentAuthor, dT2CurrentTitle);
+                    if (content != null) {
+                        success = true;
+                        dT2CurrentContent = content;
+                        dT2DocTitle.setText(dT2CurrentTitle);
+                        dT2DocAuthor.setText(dT2CurrentAuthor);
+                        dT2DocContent.setText(dT2CurrentContent);
+                    }
+                    return success;
+                }
+            };
+
+            task.setOnSucceeded(event -> {
+                progressBar.progressProperty().unbind();
+                progressBar.setVisible(false);
+                status.textProperty().unbind();
+
+                if (task.getValue()) status.setText("Documento abierto satisfactoriamente.");
+                else status.setText("El documento no existe.");
+            });
+
+            status.textProperty().bind(task.messageProperty());
+            progressBar.progressProperty().bind(task.progressProperty());
+
+            Thread thread = new Thread(task);
+            thread.setDaemon(true);
+            thread.start();
+        } else {
+            status.setText("Por favor, selecciona un documento para poder verlo.");
+        }
     }
 
+    // DONE  ############
     public void dT2DocClear(ActionEvent actionEvent) {
         dT2DocAuthor.clear();
         dT2DocTitle.clear();
         dT2DocContent.clear();
     }
 
+    // DONE  ############
     public void dT2Save(ActionEvent actionEvent) {
-        if (!dT2DocAuthor.getText().equals(dT2CurrentAuthor)) {
-            mLibrary.modifyDocumentAuthor(dT2CurrentAuthor, dT2CurrentTitle, dT2DocAuthor.getText());
-            dT2CurrentAuthor = dT2DocAuthor.getText();
-            dT1UpdateAuthorCombo();
+        if (!dT2DocAuthor.getText().isEmpty() && !dT2DocTitle.getText().isEmpty() && !dT2DocContent.getText().isEmpty()) {
+            progressBar.setProgress(0);
+            progressBar.setVisible(true);
+
+            Task<Boolean> task = new Task<Boolean>() {
+                @Override
+                public Boolean call() throws InterruptedException {
+                    updateMessage("Guardando documento...");
+
+                    if (!dT2DocAuthor.getText().equals(dT2CurrentAuthor)) {
+                        mLibrary.modifyDocumentAuthor(dT2CurrentAuthor, dT2CurrentTitle, dT2DocAuthor.getText());
+                        dT2CurrentAuthor = dT2DocAuthor.getText();
+                    }
+                    if (!dT2DocTitle.getText().equals(dT2CurrentTitle)) {
+                        mLibrary.modifyDocumentTitle(dT2CurrentAuthor, dT2CurrentTitle, dT2DocTitle.getText());
+                        dT2CurrentTitle = dT2DocTitle.getText();
+                    }
+                    if (!dT2DocContent.getText().equals(dT2CurrentContent)) {
+                        mLibrary.modifyDocumentContent(dT2CurrentAuthor, dT2CurrentTitle, dT2DocContent.getText());
+                        dT2CurrentContent = dT2DocContent.getText();
+                    }
+
+                    return true;
+                }
+            };
+
+            task.setOnSucceeded(event -> {
+                progressBar.progressProperty().unbind();
+                progressBar.setVisible(false);
+                status.textProperty().unbind();
+
+                if (task.getValue()) status.setText("Documento guardado satisfactoriamente.");
+                else status.setText("El documento no se ha podido eliminar.");
+
+                // Actualizar lista de resultados
+                updateCombos();
+                dT1LoadDocumentResults(true);
+                dT2LoadDocumentResults(true);
+            });
+
+            status.textProperty().bind(task.messageProperty());
+            progressBar.progressProperty().bind(task.progressProperty());
+
+            Thread thread = new Thread(task);
+            thread.setDaemon(true);
+            thread.start();
+        } else {
+            status.setText("Por favor, edita un documento para poder guardarlo.");
         }
-        if (!dT2DocTitle.getText().equals(dT2CurrentTitle)) {
-            mLibrary.modifyDocumentTitle(dT2CurrentAuthor, dT2CurrentTitle, dT2DocTitle.getText());
-            dT2CurrentTitle = dT2DocTitle.getText();
-            dT1UpdateTitleCombo();
-        }
-        if (!dT2DocContent.getText().equals(dT2CurrentContent)) {
-            mLibrary.modifyDocumentContent(dT2CurrentAuthor, dT2CurrentTitle, dT2DocContent.getText());
-        }
-        dT1LoadDocumentResults();
-        dT2LoadDocumentResults();
     }
 
+    // DONE  ############
     public void dT2Similars(ActionEvent actionEvent) {
-        dT4Author.setValue(dT2CurrentAuthor);
-        dT4Title.setValue(dT2CurrentTitle);
-        dT4DocClear();
-        dT4LoadDocumentResults();
-        documentsTab.getSelectionModel().select(3);
+        if (!dT2DocAuthor.getText().isEmpty() && !dT2DocTitle.getText().isEmpty() && !dT2DocContent.getText().isEmpty()) {
+            dT4Author.setValue(dT2CurrentAuthor);
+            dT4Title.setValue(dT2CurrentTitle);
+            dT4DocClear();
+            dT4LoadDocumentResults(false);
+            documentsTab.getSelectionModel().select(3);
+        } else {
+            status.setText("Por favor, visualiza un documento para poder buscar parecidos.");
+        }
     }
 
     // dT3
 
+    // DONE  ############
     public void dT3AddFile(ActionEvent actionEvent) {
         FileChooser fileChooser = new FileChooser();
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Text Files", "*.txt"));
         Stage stage = new Stage();
         File file = fileChooser.showOpenDialog(stage);
-        if (file != null) {
-            dT3AddDocumentFile(file.toString());
-        }
-        /*if (file != null) {
-            try {
-                //desktop.open(file);
-            } catch (IOException ex) {
-                Logger.getLogger(
-                        Home.class.getName()).log(
-                        Level.SEVERE, null, ex
-                );
+
+        progressBar.setProgress(0);
+        progressBar.setVisible(true);
+
+        Task<Boolean> task = new Task<Boolean>() {
+            @Override public Boolean call() throws InterruptedException {
+                updateMessage("Cargando documento desde fichero...");
+
+                boolean success = false;
+
+                int nFiles = 1;
+                int currentFile = 1;
+
+                if (nFiles > 0) {
+                    success = true;
+                    updateProgress(currentFile, nFiles);
+                    dT3AddDocumentFile(file.toString());
+                }
+                return success;
             }
-        }*/
+        };
+
+        task.setOnSucceeded(event -> {
+            progressBar.progressProperty().unbind();
+            progressBar.setVisible(false);
+            status.textProperty().unbind();
+
+            Boolean success = task.getValue();
+            if (success) status.setText("Documento añadido satisfactoriamente.");
+            else status.setText("El documento no se ha podido añadir.");
+
+            updateCombos();
+            dT1LoadDocumentResults(true);
+            aT1LoadAuthorResults(true);
+        });
+
+        status.textProperty().bind(task.messageProperty());
+        progressBar.progressProperty().bind(task.progressProperty());
+
+        Thread thread = new Thread(task);
+        thread.setDaemon(true);
+        thread.start();
+
+
     }
 
+    // DONE  ############
     public void dT3AddFolder(ActionEvent actionEvent) {
         FileChooser fileChooser = new FileChooser();
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Text Files", "*.txt"));
         Stage stage = new Stage();
-        List<File> list = fileChooser.showOpenMultipleDialog(stage);
-        if (list != null) {
-            for (File file : list) {
-                dT3AddDocumentFile(file.toString());
+        List<File> files = fileChooser.showOpenMultipleDialog(stage);
+
+        progressBar.setProgress(0);
+        progressBar.setVisible(true);
+
+        Task<Boolean> task = new Task<Boolean>() {
+            @Override public Boolean call() throws InterruptedException {
+                updateMessage("Cargando documentos desde ficheros...");
+                //updateProgress(1, 2);
+
+                boolean success = false;
+
+                int nFiles = files.size();
+                int currentFile = 1;
+
+                if (nFiles > 0) {
+                    success = true;
+                    for (File file : files) {
+                        updateProgress(currentFile, nFiles);
+                        dT3AddDocumentFile(file.toString());
+                        currentFile++;
+                    }
+                }
+                return success;
             }
-        }
+        };
+
+        task.setOnSucceeded(event -> {
+            progressBar.progressProperty().unbind();
+            progressBar.setVisible(false);
+            status.textProperty().unbind();
+
+            Boolean success = task.getValue();
+            if (success) status.setText("Documentos añadidos satisfactoriamente.");
+            else status.setText("Los documentos no se han podido añadir.");
+
+            updateCombos();
+            dT1LoadDocumentResults(true);
+            aT1LoadAuthorResults(true);
+        });
+
+        status.textProperty().bind(task.messageProperty());
+        progressBar.progressProperty().bind(task.progressProperty());
+
+        Thread thread = new Thread(task);
+        thread.setDaemon(true);
+        thread.start();
     }
 
-    public void dT3Add(ActionEvent actionEvent) {
-        String docAuthor = dT3DocAuthor.getText();
-        String docTitle = dT3DocTitle.getText();
-        String docContent = dT3DocContent.getText();
-        if (!docAuthor.equals("") && !docTitle.equals("") && !docContent.equals("")) {
-            mLibrary.addDocument(docAuthor, docTitle, docContent);
-        }
-        // Clear form
-        dT3DocAuthor.clear();
-        dT3DocTitle.clear();
-        dT3DocContent.clear();
-        // Update combos and views
-        dT1UpdateAuthorCombo();
-        dT1UpdateTitleCombo();
-        dT1LoadDocumentResults();
-        dT2LoadDocumentResults();
-        aT1UpdateAuthorCombo();
-        aT1LoadAuthorResults();
-    }
-
+    // DONE  ############
     public void dT3DragOver(DragEvent e) {
         final Dragboard db = e.getDragboard();
 
@@ -522,28 +853,72 @@ public class Home implements Initializable {
         }
     }
 
+    // DONE  ############
     public void dT3DragExited(DragEvent e) {
         dT3Drag.setStyle("-fx-border-color: #C6C6C6;");
     }
 
+    // DONE  ############
     public void dT3DragDropped(DragEvent e) {
         final Dragboard db = e.getDragboard();
-        boolean success = false;
-        if (db.hasFiles()) {
-            success = true;
-            // Only get the first file from the list
-            for (File file : db.getFiles()) {
-                dT3AddDocumentFile(file.toString());
+        List<File> files = db.getFiles();
+
+        progressBar.setProgress(0);
+        progressBar.setVisible(true);
+
+        Task<Boolean> task = new Task<Boolean>() {
+            @Override public Boolean call() throws InterruptedException {
+                updateMessage("Cargando documentos desde ficheros...");
+                //updateProgress(1, 2);
+
+                boolean success = false;
+                //if (db.hasFiles()) {
+
+                int nFiles = files.size();
+                int currentFile = 1;
+                if (nFiles > 0) {
+                    success = true;
+                    // Only get the first file from the list
+                    for (File file : files) {
+                        updateProgress(currentFile, nFiles);
+                        dT3AddDocumentFile(file.toString());
+                        currentFile++;
+                    }
+                }
+                return success;
             }
-        }
-        e.setDropCompleted(success);
-        e.consume();
+        };
+
+        task.setOnSucceeded(event -> {
+            progressBar.progressProperty().unbind();
+            progressBar.setVisible(false);
+            status.textProperty().unbind();
+
+            Boolean success = task.getValue();
+            e.setDropCompleted(success);
+            e.consume();
+            if (success) status.setText("Documentos añadidos satisfactoriamente.");
+            else status.setText("Los documentos no se han podido añadir.");
+
+            // Update combos and views
+            updateCombos();
+            dT1LoadDocumentResults(true);
+            aT1LoadAuthorResults(true);
+        });
+
+        status.textProperty().bind(task.messageProperty());
+        progressBar.progressProperty().bind(task.progressProperty());
+
+        Thread thread = new Thread(task);
+        thread.setDaemon(true);
+        thread.start();
     }
 
+    // DONE  ############
     public void dT3AddDocumentFile(String path) {
         try (BufferedReader br = new BufferedReader(new FileReader(path))) {
             String author = br.readLine();
-            author = author.substring(1);
+            //author = author.substring(1);
             String title = br.readLine();
             String content = "";
             String line = br.readLine();
@@ -560,264 +935,610 @@ public class Home implements Initializable {
         }
     }
 
+    // DONE  ############
+    public void dT3Add(ActionEvent actionEvent) {
+        if (!dT3DocAuthor.getText().isEmpty() && !dT3DocTitle.getText().isEmpty() && !dT3DocContent.getText().isEmpty()) {
+            progressBar.setProgress(0);
+            progressBar.setVisible(true);
+
+            Task<Boolean> task = new Task<Boolean>() {
+                @Override public Boolean call() throws InterruptedException {
+                    updateMessage("Añadiendo documento...");
+
+                    boolean success = false;
+
+                    String docAuthor = dT3DocAuthor.getText();
+                    String docTitle = dT3DocTitle.getText();
+                    String docContent = dT3DocContent.getText();
+                    if (!docAuthor.equals("") && !docTitle.equals("") && !docContent.equals("")) {
+                        success = true;
+                        mLibrary.addDocument(docAuthor, docTitle, docContent);
+                    }
+
+                    // Clear form
+                    dT3DocAuthor.clear();
+                    dT3DocTitle.clear();
+                    dT3DocContent.clear();
+
+                    return success;
+                }
+            };
+
+            task.setOnSucceeded(event -> {
+                progressBar.progressProperty().unbind();
+                progressBar.setVisible(false);
+                status.textProperty().unbind();
+
+                Boolean success = task.getValue();
+                if (success) status.setText("Documento añadido satisfactoriamente.");
+                else status.setText("El documento no se ha podido añadir.");
+
+                updateCombos();
+                dT1LoadDocumentResults(true);
+                aT1LoadAuthorResults(true);
+            });
+
+            status.textProperty().bind(task.messageProperty());
+            progressBar.progressProperty().bind(task.progressProperty());
+
+            Thread thread = new Thread(task);
+            thread.setDaemon(true);
+            thread.start();
+        } else {
+            status.setText("Por favor, introduce los datos para poder añadir el documento.");
+        }
+    }
+
+
     // dT4
 
+    // DONE  ############
     public void dT4UpdateAuthorCombo() {
-        String dT4AuthorCurrent = (String) dT4Author.getValue();
+        String current = (String) dT4Author.getValue();
         ObservableList<String> authorComboItems = FXCollections.observableArrayList();
         dT4Author.setItems(authorComboItems);
         authorComboItems.addAll(mLibrary.getAuthorNames());
-        dT4Author.setValue(dT4AuthorCurrent);
+        dT4Author.setValue(current);
     }
 
+    // DONE  ############
     public void dT4UpdateTitleCombo() {
-        String dT4TitleCurrent = (String) dT4Title.getValue();
+        String current = (String) dT4Title.getValue();
         ObservableList<String> titleComboItems = FXCollections.observableArrayList();
         dT4Title.setItems(titleComboItems);
         titleComboItems.addAll(mLibrary.getDocumentTitles());
-        dT4Title.setValue(dT4TitleCurrent);
+        dT4Title.setValue(current);
     }
 
+    // DONE  ############
     public void dT4Search(ActionEvent actionEvent) {
-        dT4LoadDocumentResults();
+        dT4LoadDocumentResults(false);
     }
 
-    public void dT4LoadDocumentResults() {
-        // Clear table elements
-        dT4TableView.getItems().clear();
+    // DONE  ############
+    public void dT4LoadDocumentResults(boolean isReload) {
+        if (!isReload) {
+            progressBar.setProgress(0);
+            progressBar.setVisible(true);
+        }
 
-        if (dT4Author.getValue() != null && dT4Title.getValue() != null && !dT4NResults.getText().equals("")) {
-            String author = dT4Author.getValue().toString();
-            String title = dT4Title.getValue().toString();
-            String algorithm = dT4Algorithm.getValue().toString();
-            int nResults = Integer.parseInt(dT4NResults.getText());
-            dT4ResultDocuments = mLibrary.getSimilarDocuments(author, title, nResults);
-            for (int i = 0; i < dT4ResultDocuments.size(); i++) {
-                dT4TableView.getItems().add(i);
+        Task<Void> task = new Task<Void>() {
+            @Override public Void call() throws InterruptedException {
+                if (!isReload) updateMessage("Realizando búsqueda de documentos parecidos...");
+                //updateProgress(1, 2);
+
+                dT4TableView.getItems().clear();
+
+                if (dT4Author.getValue() != null && dT4Title.getValue() != null && !dT4NResults.getText().equals("")) {
+                    String author = dT4Author.getValue().toString();
+                    String title = dT4Title.getValue().toString();
+                    String algorithm = dT4Algorithm.getValue().toString();
+                    int nResults = Integer.parseInt(dT4NResults.getText());
+                    dT4ResultDocuments = mLibrary.getSimilarDocuments(author, title, nResults);
+                    if (dT4ResultDocuments.size() == 0) {
+                        if (!isReload) updateMessage("No se han encontrado documentos parecidos.");
+                    } else {
+                        if (!isReload) updateMessage("Búsqueda finalizada.");
+                        for (int i = 0; i < dT4ResultDocuments.size(); i++) {
+                            dT4TableView.getItems().add(i);
+                        }
+                        dT4TableViewTitle.setCellValueFactory(cellData -> {
+                            Integer titleIndex = cellData.getValue();
+                            return new ReadOnlyStringWrapper(dT4ResultDocuments.get(titleIndex).getKey());
+                        });
+                        dT4TableViewAuthor.setCellValueFactory(cellData -> {
+                            Integer titleIndex = cellData.getValue();
+                            return new ReadOnlyStringWrapper(dT4ResultDocuments.get(titleIndex).getValue().getKey());
+                        });
+                        dT4TableViewSimilarity.setCellValueFactory(cellData -> {
+                            Integer titleIndex = cellData.getValue();
+                            return new ReadOnlyStringWrapper(String.valueOf(String.format("%.2f", dT4ResultDocuments.get(titleIndex).getValue().getValue()*100))+" %");
+                        });
+                    }
+                } else {
+                    if (!isReload) updateMessage("Debes introducir los parámetros para realizar una búsqueda.");
+                }
+                return null;
             }
-            dT4TableViewTitle.setCellValueFactory(cellData -> {
-                Integer titleIndex = cellData.getValue();
-                return new ReadOnlyStringWrapper(dT4ResultDocuments.get(titleIndex).getKey());
-            });
-            dT4TableViewAuthor.setCellValueFactory(cellData -> {
-                Integer titleIndex = cellData.getValue();
-                return new ReadOnlyStringWrapper(dT4ResultDocuments.get(titleIndex).getValue());
-            });
+        };
+
+        task.setOnSucceeded(event -> {
+            if (!isReload) {
+                progressBar.progressProperty().unbind();
+                progressBar.setVisible(false);
+                status.textProperty().unbind();
+            }
+        });
+
+        if (!isReload) {
+            status.textProperty().bind(task.messageProperty());
+            progressBar.progressProperty().bind(task.progressProperty());
         }
+
+        Thread thread = new Thread(task);
+        thread.setDaemon(true);
+        thread.start();
     }
 
+    // DONE  ############
     public void dT4Remove(ActionEvent actionEvent) {
-        int itemIndex = dT4TableView.getSelectionModel().getSelectedIndex();
-        String documentTitle = dT4ResultDocuments.get(itemIndex).getKey();
-        String authorName = dT4ResultDocuments.get(itemIndex).getValue();
-        mLibrary.removeDocument(authorName, documentTitle);
+        if (dT4TableView.getSelectionModel().getSelectedIndex() != -1) {
+            progressBar.setProgress(0);
+            progressBar.setVisible(true);
 
-        // Si se estaba visualizando ese documento => vaciar la vista de documento
-        if (authorName.equals(dT4DocAuthor.getText()) && documentTitle.equals(dT4DocTitle.getText())) {
-            dT4DocAuthor.clear();
-            dT4DocTitle.clear();
-            dT4DocContent.clear();
+            Task<Boolean> task = new Task<Boolean>() {
+                @Override
+                public Boolean call() throws InterruptedException {
+                    updateMessage("Eliminando documento...");
+
+                    int itemIndex = dT4TableView.getSelectionModel().getSelectedIndex();
+                    String documentTitle = dT4ResultDocuments.get(itemIndex).getKey();
+                    String authorName = dT4ResultDocuments.get(itemIndex).getValue().getKey();
+
+                    Boolean success = mLibrary.removeDocument(authorName, documentTitle);
+                    // Si se estaba visualizando ese documento => vaciar la vista de documento
+                    if (authorName.equals(dT4DocAuthor.getText()) && documentTitle.equals(dT4DocTitle.getText())) {
+                        dT4DocAuthor.clear();
+                        dT4DocTitle.clear();
+                        dT4DocContent.clear();
+                    }
+                    return success;
+                }
+            };
+
+            task.setOnSucceeded(event -> {
+                progressBar.progressProperty().unbind();
+                progressBar.setVisible(false);
+                status.textProperty().unbind();
+
+                if (task.getValue()) status.setText("Documento eliminado satisfactoriamente.");
+                else status.setText("El documento no existe.");
+
+                // Actualizar lista de resultados
+                updateCombos();
+                dT1LoadDocumentResults(true);
+                dT4LoadDocumentResults(true);
+                aT1LoadAuthorResults(true);
+            });
+
+            status.textProperty().bind(task.messageProperty());
+            progressBar.progressProperty().bind(task.progressProperty());
+
+            Thread thread = new Thread(task);
+            thread.setDaemon(true);
+            thread.start();
+        } else {
+            status.setText("Por favor, selecciona un documento para poder eliminarlo.");
         }
-
-        // Actualizar lista de resultados
-        dT1LoadDocumentResults();
-        dT1UpdateTitleCombo();
-
-        dT2LoadDocumentResults();
-
-        dT4UpdateAuthorCombo();
-        dT4UpdateTitleCombo();
-        dT4LoadDocumentResults();
     }
 
+    // DONE  ############
     public void dT4Show(ActionEvent actionEvent) {
-        int itemIndex = dT4TableView.getSelectionModel().getSelectedIndex();
-        dT4CurrentTitle = dT4ResultDocuments.get(itemIndex).getKey();
-        dT4CurrentAuthor = dT4ResultDocuments.get(itemIndex).getValue();
-        dT4CurrentContent = mLibrary.getDocumentContent(dT4CurrentAuthor, dT4CurrentTitle);
+        if (dT4TableView.getSelectionModel().getSelectedIndex() != -1) {
+            progressBar.setProgress(0);
+            progressBar.setVisible(true);
 
-        dT4DocTitle.setText(dT4CurrentTitle);
-        dT4DocAuthor.setText(dT4CurrentAuthor);
-        dT4DocContent.setText(dT4CurrentContent);
+            Task<Boolean> task = new Task<Boolean>() {
+                @Override
+                public Boolean call() throws InterruptedException {
+                    updateMessage("Abriendo documento...");
+
+                    int itemIndex = dT4TableView.getSelectionModel().getSelectedIndex();
+                    dT4CurrentTitle = dT4ResultDocuments.get(itemIndex).getKey();
+                    dT4CurrentAuthor = dT4ResultDocuments.get(itemIndex).getValue().getKey();
+
+                    Boolean success = false;
+                    String content = mLibrary.getDocumentContent(dT4CurrentAuthor, dT4CurrentTitle);
+                    if (content != null) {
+                        success = true;
+                        dT4CurrentContent = content;
+                        dT4DocTitle.setText(dT4CurrentTitle);
+                        dT4DocAuthor.setText(dT4CurrentAuthor);
+                        dT4DocContent.setText(dT4CurrentContent);
+                    }
+                    return success;
+                }
+            };
+
+            task.setOnSucceeded(event -> {
+                progressBar.progressProperty().unbind();
+                progressBar.setVisible(false);
+                status.textProperty().unbind();
+
+                if (task.getValue()) status.setText("Documento abierto satisfactoriamente.");
+                else status.setText("El documento no existe.");
+            });
+
+            status.textProperty().bind(task.messageProperty());
+            progressBar.progressProperty().bind(task.progressProperty());
+
+            Thread thread = new Thread(task);
+            thread.setDaemon(true);
+            thread.start();
+        } else {
+            status.setText("Por favor, selecciona un documento para poder verlo.");
+        }
     }
 
+    // DONE  ############
     public void dT4DocClear() {
         dT4DocAuthor.clear();
         dT4DocTitle.clear();
         dT4DocContent.clear();
     }
 
+    // DONE  ############
     public void dT4DocClear(ActionEvent actionEvent) {
         dT4DocClear();
     }
 
+    // DONE  ############
     public void dT4Save(ActionEvent actionEvent) {
-        if (!dT4DocAuthor.getText().equals(dT4CurrentAuthor)) {
-            mLibrary.modifyDocumentAuthor(dT4CurrentAuthor, dT4CurrentTitle, dT4DocAuthor.getText());
-            dT4CurrentAuthor = dT4DocAuthor.getText();
-            dT4UpdateAuthorCombo();
+        if (!dT4DocAuthor.getText().isEmpty() && !dT4DocTitle.getText().isEmpty() && !dT4DocContent.getText().isEmpty()) {
+            progressBar.setProgress(0);
+            progressBar.setVisible(true);
+
+            Task<Boolean> task = new Task<Boolean>() {
+                @Override
+                public Boolean call() throws InterruptedException {
+                    updateMessage("Guardando documento...");
+
+                    if (!dT4DocAuthor.getText().equals(dT4CurrentAuthor)) {
+                        mLibrary.modifyDocumentAuthor(dT4CurrentAuthor, dT4CurrentTitle, dT4DocAuthor.getText());
+                        dT4CurrentAuthor = dT4DocAuthor.getText();
+                    }
+                    if (!dT4DocTitle.getText().equals(dT4CurrentTitle)) {
+                        mLibrary.modifyDocumentTitle(dT4CurrentAuthor, dT4CurrentTitle, dT4DocTitle.getText());
+                        dT4CurrentTitle = dT1DocTitle.getText();
+                    }
+                    if (!dT4DocContent.getText().equals(dT4CurrentContent)) {
+                        mLibrary.modifyDocumentContent(dT4CurrentAuthor, dT4CurrentTitle, dT4DocContent.getText());
+                        dT4CurrentContent = dT4DocContent.getText();
+                    }
+
+                    return true;
+                }
+            };
+
+            task.setOnSucceeded(event -> {
+                progressBar.progressProperty().unbind();
+                progressBar.setVisible(false);
+                status.textProperty().unbind();
+
+                if (task.getValue()) status.setText("Documento guardado satisfactoriamente.");
+                else status.setText("El documento no se ha podido eliminar.");
+
+                // Actualizar lista de resultados
+                updateCombos();
+                dT1LoadDocumentResults(true);
+                dT4LoadDocumentResults(true);
+                aT1LoadAuthorResults(true);
+            });
+
+            status.textProperty().bind(task.messageProperty());
+            progressBar.progressProperty().bind(task.progressProperty());
+
+            Thread thread = new Thread(task);
+            thread.setDaemon(true);
+            thread.start();
+        } else {
+            status.setText("Por favor, edita un documento para poder guardarlo.");
         }
-        if (!dT4DocTitle.getText().equals(dT4CurrentTitle)) {
-            mLibrary.modifyDocumentTitle(dT4CurrentAuthor, dT4CurrentTitle, dT4DocTitle.getText());
-            dT4CurrentTitle = dT1DocTitle.getText();
-            dT4UpdateTitleCombo();
-        }
-        if (!dT4DocContent.getText().equals(dT4CurrentContent)) {
-            mLibrary.modifyDocumentContent(dT4CurrentAuthor, dT4CurrentTitle, dT4DocContent.getText());
-        }
-        dT1LoadDocumentResults();
-        dT2LoadDocumentResults();
-        dT4LoadDocumentResults();
     }
 
+    // DONE  ############
     public void dT4Similars(ActionEvent actionEvent) {
-        dT4Author.setValue(dT4CurrentAuthor);
-        dT4Title.setValue(dT4CurrentTitle);
-        dT4LoadDocumentResults();
-    }
-
-
-
-
-
-
-//    public void dT3Drag(DragEvent e) {
-//        /*Dragboard db = dragEvent.getDragboard();
-//        boolean success = false;
-//        if (db.hasString()) {
-//            System.out.println("Dropped: " + db.getString());
-//            success = true;
-//        }
-//        dragEvent.setDropCompleted(success);
-//        dragEvent.consume();*/
-//        System.out.println("dragevent");
-//        final Dragboard db = e.getDragboard();
-//        boolean success = false;
-//        if (db.hasFiles()) {
-//            System.out.println("yes");
-//            success = true;
-//            // Only get the first file from the list
-//            final File file = db.getFiles().get(0);
-//            System.out.println(file.toString());
-//            /*Platform.runLater(new Runnable() {
-//                @Override
-//                public void run() {
-//                    System.out.println(file.getAbsolutePath());
-//                    try {
-//                        if(!contentPane.getChildren().isEmpty()){
-//                            contentPane.getChildren().remove(0);
-//                        }
-//                        Image img = new Image(new FileInputStream(file.getAbsolutePath()));
-//
-//                        addImage(img, contentPane);
-//                    } catch (FileNotFoundException ex) {
-//                        Logger.getLogger(DragAndDropExample.class.getName()).log(Level.SEVERE, null, ex);
-//                    }
-//                }
-//            });*/
-//        }
-//        e.setDropCompleted(success);
-//        e.consume();
-//    }
-
-
-
-
-
-
-    public void aT1LoadAuthorResults() {
-        // Clear table elements
-        aT1TableView.getItems().clear();
-
-        // Si esta puesto el autor => Buscar todos los autores con ese prefijo => Mostrar los documentos de todos ellos
-        if (aT1Author.getValue() != null) {
-            String author = aT1Author.getValue().toString();
-            aT1ResultAuthors = new ArrayList<>(mLibrary.getAuthorsByPrefix(author));
-
-            for(int i = 0; i < aT1ResultAuthors.size(); i++){
-                aT1TableView.getItems().add(i);
-            }
-            aT1TableViewAuthor.setCellValueFactory(cellData -> {
-                Integer titleIndex = cellData.getValue();
-                return new ReadOnlyStringWrapper(aT1ResultAuthors.get(titleIndex));
-            });
-        }
-        // Si no esta puesto el autor => Mostrar todos los documentos
-        else if (aT1Author.getValue() == null) {
-            aT1ResultAuthors = new ArrayList<>(mLibrary.getAuthorNames());
-
-            for(int i = 0; i < aT1ResultAuthors.size(); i++){
-                aT1TableView.getItems().add(i);
-            }
-            aT1TableViewAuthor.setCellValueFactory(cellData -> {
-                Integer titleIndex = cellData.getValue();
-                return new ReadOnlyStringWrapper(aT1ResultAuthors.get(titleIndex));
-            });
+        if (!dT4DocAuthor.getText().isEmpty() && !dT4DocTitle.getText().isEmpty() && !dT4DocContent.getText().isEmpty()) {
+            dT4Author.setValue(dT4CurrentAuthor);
+            dT4Title.setValue(dT4CurrentTitle);
+            dT4LoadDocumentResults(false);
+        } else {
+            status.setText("Por favor, visualiza un documento para poder buscar parecidos.");
         }
     }
 
-    public void aT1UpdateAuthorCombo() {
-        String aT1AuthorCurrent = (String) aT1Author.getValue();
-        ObservableList<String> authorComboItems = FXCollections.observableArrayList();
-        aT1Author.setItems(authorComboItems);
-        authorComboItems.addAll(mLibrary.getAuthorNames());
-        aT1Author.setValue(aT1AuthorCurrent);
-    }
+    // aT1
 
-    public void aT1ClearAuthor(ActionEvent actionEvent) {
+    // DONE  ############
+    public void aT1AuthorClear(ActionEvent actionEvent) {
         aT1Author.setValue("");
     }
 
+    // DONE  ############
+    public void aT1UpdateAuthorCombo() {
+        String current = (String) aT1Author.getValue();
+        ObservableList<String> authorComboItems = FXCollections.observableArrayList();
+        aT1Author.setItems(authorComboItems);
+        authorComboItems.addAll(mLibrary.getAuthorNames());
+        aT1Author.setValue(current);
+    }
+
+    // DONE  ############
     public void aT1Search(ActionEvent actionEvent) {
-        aT1LoadAuthorResults();
+        aT1LoadAuthorResults(false);
     }
 
+    // DONE  ############
+    public void aT1LoadAuthorResults(boolean isReload) {
+        if (!isReload) {
+            progressBar.setProgress(0);
+            progressBar.setVisible(true);
+        }
+
+        Task<Void> task = new Task<Void>() {
+            @Override public Void call() throws InterruptedException {
+                if (!isReload) updateMessage("Realizando búsqueda de autores...");
+                //updateProgress(1, 2);
+
+                aT1TableView.getItems().clear();
+
+
+
+                // Si esta puesto el autor => Buscar todos los autores con ese prefijo
+                if (aT1Author.getValue() != null) {
+                    String author = aT1Author.getValue().toString();
+                    aT1ResultAuthors = new ArrayList<>(mLibrary.getAuthorsByPrefix(author));
+
+                    if (aT1ResultAuthors.size() == 0) {
+                        if (!isReload) updateMessage("No se han encontrado autores.");
+                    } else {
+                        if (!isReload) updateMessage("Búsqueda finalizada.");
+                        for(int i = 0; i < aT1ResultAuthors.size(); i++){
+                            aT1TableView.getItems().add(i);
+                        }
+                        aT1TableViewAuthor.setCellValueFactory(cellData -> {
+                            Integer titleIndex = cellData.getValue();
+                            return new ReadOnlyStringWrapper(aT1ResultAuthors.get(titleIndex));
+                        });
+                    }
+                }
+                // Si no esta puesto el autor => Mostrar todos los autores
+                else if (aT1Author.getValue() == null) {
+                    aT1ResultAuthors = new ArrayList<>(mLibrary.getAuthorNames());
+                    if (!isReload) updateMessage("Se muestra la lista completa de autores.");
+
+                    for(int i = 0; i < aT1ResultAuthors.size(); i++){
+                        aT1TableView.getItems().add(i);
+                    }
+                    aT1TableViewAuthor.setCellValueFactory(cellData -> {
+                        Integer titleIndex = cellData.getValue();
+                        return new ReadOnlyStringWrapper(aT1ResultAuthors.get(titleIndex));
+                    });
+                }
+
+                return null;
+            }
+        };
+
+        task.setOnSucceeded(event -> {
+            if (!isReload) {
+                progressBar.progressProperty().unbind();
+                progressBar.setVisible(false);
+                status.textProperty().unbind();
+            }
+        });
+
+        if (!isReload) {
+            status.textProperty().bind(task.messageProperty());
+            progressBar.progressProperty().bind(task.progressProperty());
+        }
+
+        Thread thread = new Thread(task);
+        thread.setDaemon(true);
+        thread.start();
+    }
+
+    // DONE  ############
     public void aT1Remove(ActionEvent actionEvent) {
-        int itemIndex = aT1TableView.getSelectionModel().getSelectedIndex();
-        String authorName = aT1ResultAuthors.get(itemIndex);
-        mLibrary.removeAuthor(authorName);
+        if (aT1TableView.getSelectionModel().getSelectedIndex() != -1) {
+            progressBar.setProgress(0);
+            progressBar.setVisible(true);
 
-        // Si se estaba visualizando ese autor => vaciar la vista de documento
-        if (authorName.equals(aT1AuthorName.getText())) {
-            aT1AuthorName.clear();
+            Task<Boolean> task = new Task<Boolean>() {
+                @Override
+                public Boolean call() throws InterruptedException {
+                    updateMessage("Eliminando autor...");
+
+                    int itemIndex = aT1TableView.getSelectionModel().getSelectedIndex();
+                    String authorName = aT1ResultAuthors.get(itemIndex);
+
+
+                    Boolean success = mLibrary.removeAuthor(authorName);
+                    // Si se estaba visualizando ese autor => vaciar la vista de documento
+                    if (authorName.equals(aT1AuthName.getText())) {
+                        aT1AuthName.clear();
+                    }
+                    return success;
+                }
+            };
+
+            task.setOnSucceeded(event -> {
+                progressBar.progressProperty().unbind();
+                progressBar.setVisible(false);
+                status.textProperty().unbind();
+
+                if (task.getValue()) status.setText("Autor eliminado satisfactoriamente.");
+                else status.setText("El autor no existe.");
+
+                // Actualizar lista de resultados
+                updateCombos();
+                dT1LoadDocumentResults(true);
+                aT1LoadAuthorResults(true);
+            });
+
+            status.textProperty().bind(task.messageProperty());
+            progressBar.progressProperty().bind(task.progressProperty());
+
+            Thread thread = new Thread(task);
+            thread.setDaemon(true);
+            thread.start();
+        } else {
+            status.setText("Por favor, selecciona un autor para poder eliminarlo.");
         }
-
-        // Actualizar lista de resultados
-        dT1UpdateTitleCombo();
-        dT1UpdateAuthorCombo();
-        dT1LoadDocumentResults();
-        aT1LoadAuthorResults();
-        aT1UpdateAuthorCombo();
     }
 
+    // DONE  ############
     public void aT1Show(ActionEvent actionEvent) {
-        int itemIndex = aT1TableView.getSelectionModel().getSelectedIndex();
-        aT1CurrentAuthor = aT1ResultAuthors.get(itemIndex);
-        aT1AuthorName.setText(aT1CurrentAuthor);
-    }
+        if (aT1TableView.getSelectionModel().getSelectedIndex() != -1) {
+            progressBar.setProgress(0);
+            progressBar.setVisible(true);
 
-    public void aT1AuthorClear(ActionEvent actionEvent) {
-        aT1AuthorName.clear();
-    }
+            Task<Boolean> task = new Task<Boolean>() {
+                @Override
+                public Boolean call() throws InterruptedException {
+                    updateMessage("Abriendo autor...");
 
-    public void aT1Save(ActionEvent actionEvent) {
-        if (!aT1AuthorName.getText().equals(aT1CurrentAuthor)) {
-            mLibrary.modifyAuthor(aT1CurrentAuthor, aT1AuthorName.getText());
-            aT1CurrentAuthor = aT1AuthorName.getText();
-            dT1UpdateAuthorCombo();
-            aT1UpdateAuthorCombo();
-            dT1LoadDocumentResults();
-            aT1LoadAuthorResults();
+                    int itemIndex = aT1TableView.getSelectionModel().getSelectedIndex();
+                    aT1CurrentAuthor = aT1ResultAuthors.get(itemIndex);
+
+                    aT1AuthName.setText(aT1CurrentAuthor);
+
+                    boolean success = true;
+                    return success;
+                }
+            };
+
+            task.setOnSucceeded(event -> {
+                progressBar.progressProperty().unbind();
+                progressBar.setVisible(false);
+                status.textProperty().unbind();
+
+                if (task.getValue()) status.setText("Autor abierto satisfactoriamente.");
+                else status.setText("El autor no existe.");
+            });
+
+            status.textProperty().bind(task.messageProperty());
+            progressBar.progressProperty().bind(task.progressProperty());
+
+            Thread thread = new Thread(task);
+            thread.setDaemon(true);
+            thread.start();
+        } else {
+            status.setText("Por favor, selecciona un autor para poder verlo.");
         }
+    }
+
+    // DONE  ############
+    public void aT1AuthClear(ActionEvent actionEvent) {
+        aT1AuthName.clear();
+    }
+
+    // DONE  ############
+    public void aT1Save(ActionEvent actionEvent) {
+        if (!aT1AuthName.getText().isEmpty()) {
+            progressBar.setProgress(0);
+            progressBar.setVisible(true);
+
+            Task<Boolean> task = new Task<Boolean>() {
+                @Override
+                public Boolean call() throws InterruptedException {
+                    updateMessage("Guardando el autor...");
+
+                    if (!aT1AuthName.getText().equals(aT1CurrentAuthor)) {
+                        mLibrary.modifyAuthor(aT1CurrentAuthor, aT1AuthName.getText());
+                        aT1CurrentAuthor = aT1AuthName.getText();
+                    }
+
+                    return true;
+                }
+            };
+
+            task.setOnSucceeded(event -> {
+                progressBar.progressProperty().unbind();
+                progressBar.setVisible(false);
+                status.textProperty().unbind();
+
+                if (task.getValue()) status.setText("Autor guardado satisfactoriamente.");
+                else status.setText("El autor no se ha podido guardar.");
+
+                // Actualizar lista de resultados
+                updateCombos();
+                dT1LoadDocumentResults(true);
+                aT1LoadAuthorResults(true);
+            });
+
+            status.textProperty().bind(task.messageProperty());
+            progressBar.progressProperty().bind(task.progressProperty());
+
+            Thread thread = new Thread(task);
+            thread.setDaemon(true);
+            thread.start();
+        } else {
+            status.setText("Por favor, edita un autor para poder guardarlo.");
+        }
+
+
+
+
     }
 
     public void aT2Add(ActionEvent actionEvent) {
-        mLibrary.addAuthor(aT2AuthorName.getText());
-        aT2AuthorName.clear();
-        dT1UpdateAuthorCombo();
-        aT1UpdateAuthorCombo();
+        if (!aT2AuthName.getText().isEmpty()) {
+            progressBar.setProgress(0);
+            progressBar.setVisible(true);
+
+            Task<Boolean> task = new Task<Boolean>() {
+                @Override public Boolean call() throws InterruptedException {
+                    updateMessage("Añadiendo autor...");
+
+                    boolean success = false;
+
+                    String authName = aT2AuthName.getText();
+
+                    if (!authName.equals("")) {
+                        success = true;
+                        mLibrary.addAuthor(authName);
+                    }
+
+                    // Clear form
+                    aT2AuthName.clear();
+
+                    return success;
+                }
+            };
+
+            task.setOnSucceeded(event -> {
+                progressBar.progressProperty().unbind();
+                progressBar.setVisible(false);
+                status.textProperty().unbind();
+
+                Boolean success = task.getValue();
+                if (success) status.setText("Autor añadido satisfactoriamente.");
+                else status.setText("El autor no se ha podido añadir.");
+
+                updateCombos();
+                dT1LoadDocumentResults(true);
+                aT1LoadAuthorResults(true);
+            });
+
+            status.textProperty().bind(task.messageProperty());
+            progressBar.progressProperty().bind(task.progressProperty());
+
+            Thread thread = new Thread(task);
+            thread.setDaemon(true);
+            thread.start();
+        } else {
+            status.setText("Por favor, introduce los datos para poder añadir el autor.");
+        }
     }
-
-
-
 }

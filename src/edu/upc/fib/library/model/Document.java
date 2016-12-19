@@ -83,6 +83,7 @@ public class Document implements Comparable<Document>, Serializable {
                 sumD2 += entry.getValue();
             }
         }
+        if (Math.sqrt(sumD1) == 0 || Math.sqrt(sumD2) == 0) return 0;
         return sum/(Math.sqrt(sumD1) * Math.sqrt(sumD2));
         //}
         //return 0;
