@@ -1,0 +1,14 @@
+BRUNO TOLEDANO
+WhatsApp dejará de funcionar en estos móviles a finales de 2016
+WhatsApp es un servicio de mensajería imprescindible para millones de personas a lo largo y ancho del mundo. Quedarse sin él es algo bastante grave, por tanto, y precisamente eso es lo que puede ocurrir a aquellos que tengan un móvil anticuado.
+
+Como publicaron en su blog en febrero de 2016, WhatsApp dejará de dar soporte y de funcionar por completo el día 31 de diciembre en móviles con Android 2.1, Android 2.2, Windows Phone 7 y en los iPhone 3GS o con iOS 6. 
+
+Aunque inicialmente también se iba a retirar el soporte a BlackBerry OS, BlackBerry 10, Nokia S40 y Nokia Symbian S60, WhatsApp ha decidido continuar en estas plataformas hasta el 30 de junio de 2017, momento en el que también pasarán a estar totalmente obsoletas. 
+
+La razón por la que abandonan estos móviles se sencilla: no tienen suficiente potencia y los usa un porcentaje tan pequeño de la población que no merece la pena trabajar para ellos. O, dicho con las palabras más amables usadas por WhatsApp "no ofrecen el tipo de características que necesitamos para mejorar las funcionalidades de nuestra app en el futuro".
+
+Es muy poco probable que esta medida afecte a los países donde más se usa WhatsApp, aunque en zonas menos desarrolladas donde el acceso a teléfonos móviles más actuales es complicado o resulta muy caro, podrían quedar desamparadas por este movimiento.
+
+WhatsApp acumula más de 900 millones de usuarios, cifras que dieron el pasado abril de la mano de Facebook, que adquirieron el servicio en octubre de 2014. También tiene más de 100 millones de llamadas al día a través de su plataforma. A lo largo de 2016, la app se ha renovado más que nunca, implementando mejores medidas de seguridad ynuevas funcionalidades.
+

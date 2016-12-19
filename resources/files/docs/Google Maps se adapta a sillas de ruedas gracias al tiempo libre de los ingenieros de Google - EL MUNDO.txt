@@ -1,0 +1,12 @@
+EL MUNDO
+Google Maps se adapta a sillas de ruedas gracias al tiempo libre de los ingenieros de Google
+Google nació como una empresa de buen rollito donde las políticas de empresa eran un lujo para sus empleados. Tanto es así que todo el mundo tenía permiso para invertir un 20% de su jornada laboral en proyectos al margen de su trabajo habitual, algo que dio sus frutos muy pronto.
+
+Gmail, AdSense o Google News son algunos de los servicios de la compañía que empezaron como 'proyectos del 20%' que luego se sumaron a la empresa como partes importantísimas de la misma. 
+
+Y aunque actualmente ya casi nadie parece emplear ese porcentaje libremente y Google ha cambiado mucho su funcionamiento interno, algunos irreverentes han seguido haciendo proyectos propios en su jornada. Es el caso de Rio Akasaka, un responsable de Google Drive, que en su 20% de tiempo ha adaptado los resultados de Google Maps a personas en sillas de ruedas. 
+
+Junto con un equipo de entre 5 y 10 colaboradores, Akasaka ha pasado un año mejorando Maps. En declaraciones a Business Insider, ha asegurado que "la accesibilidad es algo importante en Google, pero que normalmente se trabaja con ello dependiendo de si hay un requisito legal o no". 
+
+El añadido que han introducido es bastante sencillo: todos los comerciones y localizaciones de Google Maps tienen unas etiquetas, seleccionadas por usuarios, para describir el lugar. Entre las etiquetas, gracias a Akasaka y su equipo, ahora se puede marcar si un sitio es fácilmente accesible con silla de ruedas. Este indicación también está pensada para otras personas con problemas de movilidad.
+

@@ -1,0 +1,17 @@
+MARÍA CLIMENT
+El profesor se 'teletransporta'
+BBC, TV Tokyo, CNBC, ESPN o Al Jazeera ya han utilizado los gráficos interactivos de la española Brainstorm para sus retransmisiones en directo. La empresa, con más de 25 años de experiencia, es experta en el desarrollo de aplicaciones para estudios virtuales de televisión. Pero, ¿y si ese conocimiento se trasladase a otro sector, por ejemplo, el educativo? Simplemente, podría revolucionarlo por completo. Su tecnología de Realidad Aumentada ya permite trasladar al docente a mundos en 3D sin salir del aula. Incluso puede 'teletransportarlo' a localizaciones reales para acercar su explicación al alumno. Ahora, el presentador es el profesor. 
+
+«La herramienta está pensada como un apoyo al maestro». El CEO de Brainstorm, Ricardo Montesa, quiere dejar claro que su sistema no sustituye al profesor. Todo lo contrario. «El tutor continúa explicando las materias en vivo, pero dentro del material virtual», señala. También puede 'viajar' a lugares de verdad. Por ejemplo, para Historia del Arte, puede incorporarse su imagen en vivo dentro de un vídeo real del Partenón. La ventaja es que es posible hacerlo con cualquier vídeo, aunque previamente necesitaba haber sido procesado. 
+
+El funcionamiento del sistema es muy sencillo: sólo hace falta un ordenador portátil y una cámara. La compañía, en Valencia, ha resuelto la necesidad de tener que montar un plató en la clase gracias a la integración en su software de una cámara de distancia. Se trata de un dispositivo de Intel que mide la profundidad de la persona con infrarrojos. También reconoce los dedos del usuario para que pueda interactuar con la pantalla. 
+
+La clave de la propuesta es que el docente da la lección en directo para mantener el dinamismo de la clase. «Le añade su propio interés», comenta Montesa. «Si el vídeo estuviese grabado, perdería la frescura de tener un profesor en vivo». También tiene la opción de interactuar con los elementos gráficos en tiempo real. Por ejemplo, puede explicar un eclipse de Sol moviendo o girando la Luna con la mano. 
+
+La compañía ya trabaja en otra versión, dentro del proyecto europeo SmartSet, donde son los alumnos quienes se convierten en presentadores. Un colegio de Alicante ya está utilizando el sistema para que sus estudiantes aprendan a expresarse, hablar en público y poner en práctica sus propios guiones.
+
+El modelo de negocio que propone Brainstorm es similar al de un 'marketplace' de 'apps' móviles, donde los desarrolladores podrían incorporar su contenido y cobrar por uso. Como es un proceso lento, la empresa ha ideado una fórmula para empezar a operar. Su producto EdDIO, que saldrá a la venta en un mes, permite a los alumnos cargar sus presentaciones en PowerPoint y escoger un escenario en 3D para mostrar sus trabajos desde dentro de un entorno virtual. 
+
+
+En la próxima feria Bett, que se celebra en enero en Londres, Brainstorm mostrará sus novedades. Una de ellas es la conectividad del software con las pizarras digitales. El siguiente paso es que el estudiante pueda interactuar con el contenido desde su tableta. Y el último nivel será el uso de gafas de Realidad Virtual. 
+
